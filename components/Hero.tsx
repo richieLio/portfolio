@@ -2,44 +2,54 @@ import { FaLocationArrow } from "react-icons/fa6";
 import MagicButton from "./ui/MagicButton";
 import { Spotlight } from "./ui/Spotlight";
 import { TextGenerateEffect } from "./ui/text-generate-effect";
+
 const Hero = () => {
   return (
-    <div className="pb-20 pt-36">
+    <section className="relative pb-20 pt-36">
+      {/* Spotlight Effects */}
       <div>
         <Spotlight
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
           fill="white"
         />
         <Spotlight
-          className="top-10 left-full  h-[80vh] w-[50vw]"
+          className="top-10 left-full h-[80vh] w-[50vw]"
           fill="purple"
         />
-        <Spotlight className="top-28 left-80  h-[80vh] w-[50vw]" fill="blue" />
+        <Spotlight
+          className="top-28 left-80 h-[80vh] w-[50vw]"
+          fill="blue"
+        />
       </div>
-      <div className="h-screen w-full dark:bg-black-100 bg-white  dark:bg-grid-white/[0.05] bg-grid-black/[0.2] flex items-center justify-center absolute top-0 left-0">
-        {/* Radial gradient for the container to give a faded look */}
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black-100 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+
+      {/* Background with Radial Gradient */}
+      <div className="absolute inset-0 flex items-center justify-center h-screen w-full bg-white dark:bg-black-100 dark:bg-grid-white/[0.05] bg-grid-black/[0.2]">
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center bg-white dark:bg-black-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       </div>
-      <div className="flex justify-center relative my-20 z-10">
-        <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
-          <h2 className="uppercase tracking-widest text-xs text-center text-blue-100 max-w-80">
-            Dynamic web magic with nextjs
+
+      {/* Hero Content */}
+      <div className="relative z-10 flex justify-center my-20">
+        <div className="flex flex-col items-center justify-center max-w-[89vw] md:max-w-2xl lg:max-w-[60vw]">
+          <h2 className="text-center text-xs uppercase tracking-widest text-blue-100 max-w-80">
+            Dynamic web magic with Next.js
           </h2>
           <TextGenerateEffect
             className="text-center text-[40px] md:text-5xl lg:text-6xl"
-            words="Tranforming concept into Seamless User Experiences"
+            words="Transforming concepts into Seamless User Experiences"
           />
-          <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl">
-            Hi, I&apos;m Hoang, A fullstack developer based in Vietnam.
+          <p className="mb-4 text-center text-sm md:text-lg lg:text-2xl md:tracking-wider">
+            Hi, I&apos;m Hoang, a full-stack developer based in Vietnam.
           </p>
           <a href="#about">
-            <MagicButton title="Show my work" 
-            icon={<FaLocationArrow/>}
-            position="right"/>
+            <MagicButton
+              title="Show my work"
+              icon={<FaLocationArrow />}
+              position="right"
+            />
           </a>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

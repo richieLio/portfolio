@@ -8,7 +8,7 @@ export const navItems = [
 export const gridItems = [
   {
     id: 1,
-    title: "I prioritize client collaboration, fostering open communication ",
+    title: "I prioritize client collaboration, fostering open communication.",
     description: "",
     className: "lg:col-span-3 md:col-span-6 md:row-span-4 lg:min-h-[60vh]",
     imgClassName: "w-full h-full",
@@ -18,7 +18,7 @@ export const gridItems = [
   },
   {
     id: 2,
-    title: "I'm very flexible with time zone communications",
+    title: "I'm very flexible with time zone communications.",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-2",
     imgClassName: "",
@@ -29,7 +29,7 @@ export const gridItems = [
   {
     id: 3,
     title: "My tech stack",
-    description: "I constantly try to improve",
+    description: "I constantly strive to improve.",
     className: "lg:col-span-2 md:col-span-3 md:row-span-2",
     imgClassName: "",
     titleClassName: "justify-center",
@@ -46,10 +46,9 @@ export const gridItems = [
     img: "/grid.svg",
     spareImg: "/b4.svg",
   },
-
   {
     id: 5,
-    title: "Experienced in deploying and managing applications on AWS, including EC2, S3, and Lambda",
+    title: "Experienced in deploying and managing applications on AWS, including EC2, S3, and Lambda.",
     description: "The Inside Scoop",
     className: "md:col-span-3 md:row-span-2",
     imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
@@ -63,17 +62,18 @@ export const gridItems = [
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-1",
     imgClassName: "",
-    titleClassName: "justify-center md:max-w-full max-w-60 text-center",
+    titleClassName: "justify-center text-center md:max-w-full max-w-60",
     img: "",
     spareImg: "",
   },
 ];
 
+
 export const projects = [
   {
     id: 1,
     title: "RMS - Room Management System",
-    des: "Efficiently manage rental properties with RMS, featuring a user-friendly interface designed for ease of use",
+    des:   "Efficiently manage rental properties with RMS, featuring a user-friendly interface designed for ease of use.",
     img: "/rms.jpg",
     iconLists: ["/csharp.svg", "/firebase.svg", "/xaml.svg", "/sql.svg"],
     link: "https://github.com/richieLio/PRN221_FinalProject",
@@ -81,7 +81,7 @@ export const projects = [
   {
     id: 2,
     title: "Sport Booking Schedule",
-    des: "Sports booking system makes it easy to manage and reserve fields with a user-friendly and convenient interface.",
+    des: "A sports booking system that simplifies the management and reservation of fields with a user-friendly interface.",
     img: "/ssb.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/csharp.svg", "/firebase.svg", "/netlify.svg"],
     link: "https://github.com/richieLio/NEXTJS-FE",
@@ -174,7 +174,7 @@ export const workExperience = [
   {
     id: 1,
     title: "Backend Engineer Intern",
-    desc: "Assisted in the development of a web-based platform using .NET API, enhancing interactivity.",
+    desc:  "Assisted in the development of a web-based platform using .NET API, enhancing interactivity.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
   },
@@ -188,7 +188,7 @@ export const workExperience = [
   {
     id: 3,
     title: "Freelance Web Dev Project",
-    desc: "Led the dev of a desktop web for a client, from initial concept to deployment on live server.",
+    desc: "Led the development of a web application for a client, from initial concept to deployment on a live server.",
     className: "md:col-span-2", // change to md:col-span-2
     thumbnail: "/exp3.svg",
   },
