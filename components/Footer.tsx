@@ -1,44 +1,190 @@
-import { FaLocationArrow } from "react-icons/fa6";
-
+import { FaLocationArrow, FaGithub, FaLinkedin } from "react-icons/fa6";
+import { HiMail } from "react-icons/hi";
+import { FiPhone } from "react-icons/fi";
 import { socialMedia } from "@/data";
 import MagicButton from "@/components/ui/MagicButton";
+import { BackgroundGradientAnimation } from "./ui/background-gradient-animation";
 
 const Footer = () => {
-  return (
-    <footer className="w-full pt-20 pb-10" id="contact">
-      <div className="flex flex-col items-center">
-        <h1 className="heading lg:max-w-[45vw]">
-          Ready to take <span className="text-purple">your</span> digital
-          presence to the next level?
-        </h1>
-        <p className="text-white-200 md:mt-10 my-5 text-center">
-          Reach out to me today and let&apos;s discuss how I can help you
-          achieve your goals.
-        </p>
-        <a href="mailto:lhuyhoang18903@gmail.com">
-          <MagicButton
-            title="Let's get in touch"
-            icon={<FaLocationArrow />}
-            position="right"
-          />
-        </a>
-      </div>
-      <div className="flex mt-16 md:flex-row flex-col justify-between items-center">
-        <p className="md:text-base text-sm md:font-normal font-light">
-          Copyright © 2024 Le Huy Hoang
-        </p>
+  const currentYear = new Date().getFullYear();
 
-        <div className="flex items-center md:gap-3 gap-6">
-          {socialMedia.map((info) => (
-            <div
-              key={info.id}
-              className="w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 bg-black-200 rounded-lg border border-black-300"
-            >
-              <a href={info.link}>
-                <img src={info.img} alt="icons" width={20} height={20} />
-              </a>
+  return (
+    <footer className="relative pt-24 pb-10 overflow-hidden" id="contact">
+      {/* Background Effect */}
+      <div className="absolute inset-0 z-0 opacity-30">
+        <BackgroundGradientAnimation
+          containerClassName="h-full w-full"
+          className="opacity-40"
+        />
+      </div>
+
+      {/* Footer Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Contact Section */}
+        <div className="bg-gradient-to-r from-black-200/80 to-black-100/90 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 mb-16 shadow-xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
+                Let&apos;s Connect
+              </h2>
+              <h1 className="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Bring Your{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+                  Digital Vision
+                </span>{" "}
+                to Life?
+              </h1>
+              <p className="text-white-100 mb-8 leading-relaxed">
+                I&apos;m always open to discussing new projects, creative ideas
+                or opportunities to be part of your vision. Let&apos;s create
+                something extraordinary together!
+              </p>
+
+              {/* Contact Information */}
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-purple/10 flex items-center justify-center mr-4">
+                    <HiMail className="w-5 h-5 text-purple" />
+                  </div>
+                  <a
+                    href="mailto:lhuyhoang18903@gmail.com"
+                    className="text-white-100 hover:text-purple transition-colors"
+                  >
+                    lhuyhoang18903@gmail.com
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-purple/10 flex items-center justify-center mr-4">
+                    <FiPhone className="w-5 h-5 text-purple" />
+                  </div>
+                  <a
+                    href="tel:+84123456789"
+                    className="text-white-100 hover:text-purple transition-colors"
+                  >
+                    +84 123 456 789
+                  </a>
+                </div>
+              </div>
+
+              {/* Social Media */}
+              <div className="flex gap-4">
+                {socialMedia.map((info) => (
+                  <a
+                    key={info.id}
+                    href={info.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 flex justify-center items-center backdrop-blur-lg bg-black-200/50 rounded-full border border-white/10 
+                              hover:bg-purple/20 hover:border-purple/30 transition-all duration-300 group"
+                  >
+                    <img
+                      src={info.img}
+                      alt={`social-${info.id}`}
+                      width={20}
+                      height={20}
+                      className="group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </a>
+                ))}
+              </div>
             </div>
-          ))}
+
+            {/* Contact Form */}
+            <div className="bg-black-100/60 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
+              <form className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm text-white-100 mb-1"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="Your name"
+                    className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm text-white-100 mb-1"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Your email"
+                    className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm text-white-100 mb-1"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    rows={4}
+                    placeholder="Your message"
+                    className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
+                  />
+                </div>
+                <div>
+                  <MagicButton
+                    title="Send Message"
+                    icon={<FaLocationArrow />}
+                    position="right"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+            <a
+              href="#"
+              className="text-white-100 hover:text-purple transition-colors"
+            >
+              Home
+            </a>
+            <a
+              href="#work"
+              className="text-white-100 hover:text-purple transition-colors"
+            >
+              Projects
+            </a>
+            <a
+              href="#experience"
+              className="text-white-100 hover:text-purple transition-colors"
+            >
+              Experience
+            </a>
+            <a
+              href="#skills"
+              className="text-white-100 hover:text-purple transition-colors"
+            >
+              Skills
+            </a>
+            <a
+              href="#contact"
+              className="text-white-100 hover:text-purple transition-colors"
+            >
+              Contact
+            </a>
+          </div>
+
+          <p className="text-white-100/70 text-sm">
+            © {currentYear} Le Huy Hoang. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

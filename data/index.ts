@@ -1,14 +1,17 @@
 export const navItems = [
-  { name: "About", link: "#about" },
-  { name: "Projects", link: "#projects" },
-  // { name: "Testimonials", link: "#testimonials" },
+  { name: "Home", link: "#" },
+  { name: "Work", link: "#work" },
+  { name: "Experience", link: "#experience" },
+  { name: "Skills", link: "#skills" },
+  { name: "Publications", link: "#publications" },
+  { name: "Certifications", link: "#certifications" },
   { name: "Contact", link: "#contact" },
 ];
 
 export const gridItems = [
   {
     id: 1,
-    title: "I prioritize client collaboration, fostering open communication.",
+    title: "I am a passionate backend developer with expertise in .NET Core, C#, SQL Server, and Entity Framework.",
     description: "",
     className: "lg:col-span-3 md:col-span-6 md:row-span-4 lg:min-h-[60vh]",
     imgClassName: "w-full h-full",
@@ -18,7 +21,7 @@ export const gridItems = [
   },
   {
     id: 2,
-    title: "I'm very flexible with time zone communications.",
+    title: "Education: FPT University (2021-2025)",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-2",
     imgClassName: "",
@@ -29,7 +32,7 @@ export const gridItems = [
   {
     id: 3,
     title: "My tech stack",
-    description: "I constantly strive to improve.",
+    description: "Backend, Frontend, Database, DevOps, AI & Machine Learning",
     className: "lg:col-span-2 md:col-span-3 md:row-span-2",
     imgClassName: "",
     titleClassName: "justify-center",
@@ -38,7 +41,7 @@ export const gridItems = [
   },
   {
     id: 4,
-    title: "Tech enthusiast with a passion for development.",
+    title: "Software Engineer with a passion for development.",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-1",
     imgClassName: "",
@@ -48,8 +51,8 @@ export const gridItems = [
   },
   {
     id: 5,
-    title: "Experienced in deploying and managing applications on AWS, including EC2, S3, and Lambda.",
-    description: "The Inside Scoop",
+    title: "Publication experience with two papers in international conferences on AI and Computer Science.",
+    description: "Research Contributions",
     className: "md:col-span-3 md:row-span-2",
     imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
     titleClassName: "justify-center md:justify-start lg:justify-center",
@@ -72,28 +75,28 @@ export const gridItems = [
 export const projects = [
   {
     id: 1,
-    title: "RMS - Room Management System",
-    des:   "Efficiently manage rental properties with RMS, featuring a user-friendly interface designed for ease of use.",
+    title: "Room Management System (WPF)",
+    des: "Built a desktop application for managing room reservations using WPF and .NET. Designed with MVVM architecture for better maintainability. Integrated SQL Server for room data storage and efficient querying. Implemented real-time notifications for booking status updates.",
     img: "/rms.jpg",
     iconLists: ["/csharp.svg", "/firebase.svg", "/xaml.svg", "/sql.svg"],
     link: "https://github.com/richieLio/PRN221_FinalProject",
   },
   {
     id: 2,
-    title: "Sport Booking Schedule",
-    des: "A sports booking system that simplifies the management and reservation of fields with a user-friendly interface.",
+    title: "Sports Schedule Booking Web Application",
+    des: "Developed a web platform for booking sports fields using Next.js (TypeScript) and .NET backend. Implemented real-time updates with SignalR for instant booking confirmations. Optimized database queries with MySQL, ensuring fast performance. Deployed via Docker, Nginx with CI/CD. Added websocket for real-time chat functionality.",
     img: "/ssb.png",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/csharp.svg", "/firebase.svg", "/netlify.svg"],
+    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/csharp.svg", "/netlify.svg"],
     link: "https://github.com/richieLio/NEXTJS-FE",
   },
-  // {
-  //   id: 3,
-  //   title: "AI Image SaaS - Canva Application",
-  //   des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-  //   img: "/p3.svg",
-  //   iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
-  //   link: "https://github.com/adrianhajdin/ai_saas_app",
-  // },
+  {
+    id: 3,
+    title: "Mai Assistant – AI Chatbot with RAG",
+    des: "An AI chatbot for customer support leveraging Retrieval-Augmented Generation (RAG) for accurate responses. Built with Python, FastAPI, MongoDB, SentenceTransformer, PhoBERT, and spaCy. Features include contextual search, real-time answers, and content moderation, resulting in faster support and improved user experience.",
+    img: "/p3.svg",
+    iconLists: ["/re.svg", "/ts.svg", "/c.svg"],
+    link: "#",
+  },
   // {
   //   id: 4,
   //   title: "Animated Apple Iphone 3D Website",
@@ -102,6 +105,56 @@ export const projects = [
   //   iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
   //   link: "https://github.com/adrianhajdin/iphone",
   // },
+];
+
+// Publications section
+export const publications = [
+  {
+    id: 1,
+    title: "Robust Student Attendance Checking System Using Efficient LBP-based Ensemble Learning Approaches",
+    authors: "Le Huy Hoang, et al.",
+    venue: "International Conference on Intelligent Information Technology (ICIIT)",
+    year: 2025,
+    available: "ACM Publications",
+    link: "#",
+  },
+  {
+    id: 2,
+    title: "Robust Adaptive Masked Face Recognition Using Mediapipe and Advanced ResNet50 with Multi-Layer Feature Fusion",
+    authors: "Le Huy Hoang, et al.",
+    venue: "International Conference on Computational Science and Its Applications",
+    year: 2025,
+    available: "Springer",
+    link: "#",
+  },
+];
+
+// Certifications section
+export const certifications = [
+  {
+    id: 1,
+    title: "Software Development Lifecycle",
+    issuer: "Coursera",
+    year: "2023",
+    link: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~GLW32B4SM4EW/CERTIFICATE_LANDING_PAGE~GLW32B4SM4EW.jpeg",
+    image: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~GLW32B4SM4EW/CERTIFICATE_LANDING_PAGE~GLW32B4SM4EW.jpeg"
+  },
+  {
+    id: 2,
+    title: "Project Management Principles and Practices",
+    issuer: "Coursera",
+    year: "2023",
+    link: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~CDMVDYSSUKKV/CERTIFICATE_LANDING_PAGE~CDMVDYSSUKKV.jpeg",
+    image: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~CDMVDYSSUKKV/CERTIFICATE_LANDING_PAGE~CDMVDYSSUKKV.jpeg"
+  },
+  {
+    id: 3,
+    title: "User Experience Research and Design",
+    issuer: "Coursera",
+    year: "2023",
+    link: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~UWKC7BN68Q31/CERTIFICATE_LANDING_PAGE~UWKC7BN68Q31.jpeg",
+    image: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~UWKC7BN68Q31/CERTIFICATE_LANDING_PAGE~UWKC7BN68Q31.jpeg"
+  },
 ];
 
 export const testimonials = [
@@ -173,24 +226,36 @@ export const companies = [
 export const workExperience = [
   {
     id: 1,
-    title: "Backend Engineer Intern",
-    desc:  "Assisted in the development of a web-based platform using .NET API, enhancing interactivity.",
+    title: "Software Engineering Intern",
+    company: "FPT Software",
+    duration: "2024 - Present",
+    desc: "Interned at FPT Software, Ho Chi Minh City (2024), where I developed and maintained .NET-based applications, focusing on backend API development. Assisted in frontend development using React.js and worked with MySQL for database management.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
+    skills: [".NET Core", "React.js", "MySQL", "RESTful APIs"],
+    link: "#projects"
   },
-  // {
-  //   id: 2,
-  //   title: "Mobile App Dev - JSM Tech",
-  //   desc: "Designed and developed mobile app for both iOS & Android platforms using React Native.",
-  //   className: "md:col-span-2", // change to md:col-span-2
-  //   thumbnail: "/exp2.svg",
-  // },
+  {
+    id: 2,
+    title: "AI Research Contributor",
+    company: "Academic Research",
+    duration: "2023 - 2024",
+    desc: "Published research on Face Recognition and Student Attendance Systems in international conferences using ML/AI techniques including TensorFlow, OpenCV, and ensemble learning approaches.",
+    className: "md:col-span-2",
+    thumbnail: "/exp2.svg",
+    skills: ["TensorFlow", "OpenCV", "Python", "Machine Learning"],
+    link: "#publications"
+  },
   {
     id: 3,
-    title: "Freelance Web Dev Project",
-    desc: "Led the development of a web application for a client, from initial concept to deployment on a live server.",
-    className: "md:col-span-2", // change to md:col-span-2
+    title: "Freelance Web Development",
+    company: "Self-employed",
+    duration: "2022 - 2023",
+    desc: "Led the development of web applications for clients, from initial concept to deployment on live servers using modern web technologies. Implemented responsive designs and optimized performance for enhanced user experience.",
+    className: "md:col-span-2",
     thumbnail: "/exp3.svg",
+    skills: ["Next.js", "Tailwind CSS", "TypeScript", "Docker"],
+    link: "#"
   },
   // {
   //   id: 4,
@@ -215,6 +280,85 @@ export const socialMedia = [
   {
     id: 3,
     img: "/tele.svg",
-    link:"https://t.me/hoanglh203"
+    link: "https://t.me/hoanglh203"
   },
+];
+
+// Skills section
+export const technicalSkills = [
+  {
+    id: 1,
+    category: "Backend",
+    skills: ".NET (ASP.NET Core, Entity Framework, LINQ), RESTful APIs, SignalR, WPF",
+    icon: "/csharp.svg"
+  },
+  {
+    id: 2,
+    category: "Frontend",
+    skills: "React.js, Next.js (TypeScript), Tailwind CSS, Ant Design",
+    icon: "/next.svg"
+  },
+  {
+    id: 3,
+    category: "Database",
+    skills: "MySQL, SQL Server, Firebase(Firestore), MongoDB",
+    icon: "/sql.svg"
+  },
+  {
+    id: 4,
+    category: "DevOps",
+    skills: "Docker, Nginx, CI/CD (GitHub Actions), Basic knowledge of Microsoft Azure (App Services, VMs)",
+    icon: "/dock.svg"
+  },
+  {
+    id: 5,
+    category: "Version Control",
+    skills: "Git, GitHub (Git Flow)",
+    icon: "/git.svg"
+  },
+  {
+    id: 6,
+    category: "System Administration",
+    skills: "Window Server, Linux(Ubuntu)",
+    icon: "/cloud.svg"
+  },
+  {
+    id: 7,
+    category: "AI & Machine Learning",
+    skills: "Python, OpenCV, TensorFlow, Scikit-learn, Flask/FastAPI",
+    icon: "/ts.svg" 
+  },
+  {
+    id: 8,
+    category: "System Architecture & Design",
+    skills: "Microservices, MVC, Monoservices",
+    icon: "/app.svg"
+  }
+];
+
+export const softSkills = [
+  {
+    id: 1,
+    category: "Development Methodologies",
+    skills: "Agile, Scrum",
+    icon: "/three.svg"
+  },
+  {
+    id: 2,
+    category: "Project Management Tools",
+    skills: "Jira, Trello",
+    icon: "/stream.svg"
+  },
+  {
+    id: 3,
+    category: "Collaboration & Communication",
+    skills: "Code review, Cross-functional teamwork",
+    icon: "/host.svg"
+  },
+  {
+    id: 4,
+    category: "Problem-Solving & Optimization",
+    skills: "Performance tuning, Debugging, Refactoring",
+    icon: "/arrow.svg"
+  }
 ];

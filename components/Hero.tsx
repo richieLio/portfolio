@@ -1,53 +1,80 @@
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow, FaGithub, FaLinkedin } from "react-icons/fa6";
+import { IoMail } from "react-icons/io5";
 import MagicButton from "./ui/MagicButton";
 import { Spotlight } from "./ui/Spotlight";
 import { TextGenerateEffect } from "./ui/text-generate-effect";
+import { BackgroundGradientAnimation } from "./ui/background-gradient-animation";
 
 const Hero = () => {
   return (
-    <section className="relative pb-20 pt-36">
-      {/* Spotlight Effects */}
-      <div>
-        <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
-          fill="white"
-        />
-        <Spotlight
-          className="top-10 left-full h-[80vh] w-[50vw]"
-          fill="purple"
-        />
-        <Spotlight
-          className="top-28 left-80 h-[80vh] w-[50vw]"
-          fill="blue"
-        />
-      </div>
-
-      {/* Background with Radial Gradient */}
-      <div className="absolute inset-0 flex items-center justify-center h-screen w-full bg-white dark:bg-black-100 dark:bg-grid-white/[0.05] bg-grid-black/[0.2]">
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center bg-white dark:bg-black-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Modern Gradient Background */}
+      <BackgroundGradientAnimation
+        containerClassName="min-h-screen w-full"
+        className="z-[-1]"
+      />
 
       {/* Hero Content */}
-      <div className="relative z-10 flex justify-center my-20">
-        <div className="flex flex-col items-center justify-center max-w-[89vw] md:max-w-2xl lg:max-w-[60vw]">
-          <h2 className="text-center text-xs uppercase tracking-widest text-blue-100 max-w-80">
-            Dynamic web magic with Next.js
+      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-7xl px-4 md:px-8">
+        <div className="flex flex-col items-center justify-center w-full">
+          <h2 className="text-center text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
+            Full-Stack Developer
           </h2>
+
           <TextGenerateEffect
-            className="text-center text-[40px] md:text-5xl lg:text-6xl"
-            words="Transforming concepts into Seamless User Experiences"
+            className="text-center text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple mb-6"
+            words="Transforming Ideas into Exceptional Digital Experiences"
           />
-          <p className="mb-4 text-center text-sm md:text-lg lg:text-2xl md:tracking-wider">
-            Hi, I&apos;m Hoang, a full-stack developer based in Vietnam.
+
+          <p className="mb-8 text-center text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto text-white-100 leading-relaxed">
+            Hi, I&apos;m Hoang, a passionate full-stack developer creating
+            impactful web applications with modern technologies.
           </p>
-          <a href="#about">
-            <MagicButton
-              title="Show my work"
-              icon={<FaLocationArrow />}
-              position="right"
-            />
-          </a>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center mb-12">
+            <a href="#work">
+              <MagicButton
+                title="View My Work"
+                icon={<FaLocationArrow />}
+                position="right"
+              />
+            </a>
+            <a href="#contact">
+              <MagicButton
+                title="Contact Me"
+                icon={<IoMail />}
+                position="right"
+              />
+            </a>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex gap-6 mt-4">
+            <a
+              href="https://github.com/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white-100 hover:text-purple transition-colors duration-300"
+            >
+              <FaGithub className="w-6 h-6" />
+            </a>
+            <a
+              href="https://linkedin.com/in/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white-100 hover:text-purple transition-colors duration-300"
+            >
+              <FaLinkedin className="w-6 h-6" />
+            </a>
+          </div>
         </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+        <span className="text-white-100 text-sm mb-2">Scroll to explore</span>
+        <div className="w-[2px] h-14 bg-gradient-to-b from-purple to-transparent animate-pulse"></div>
       </div>
     </section>
   );

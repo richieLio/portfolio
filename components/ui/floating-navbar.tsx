@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -7,7 +7,8 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { FiSun, FiMoon } from "react-icons/fi";
+import { useTheme } from "next-themes";
 
 export const FloatingNav = ({
   navItems,
@@ -21,8 +22,14 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
-
   const [visible, setVisible] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // After mounting, we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     if (typeof current === "number") {
@@ -40,19 +47,20 @@ export const FloatingNav = ({
     }
   });
 
-  const scrollToElement = (targetId: string, duration = 1500) => {
+  const scrollToElement = (targetId: string, duration = 1000) => {
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+      const targetPosition =
+        targetElement.getBoundingClientRect().top + window.scrollY;
       const startPosition = window.scrollY;
       const distance = targetPosition - startPosition;
       let startTime: number | null = null;
 
       const ease = (t: number, b: number, c: number, d: number) => {
         t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
+        if (t < 1) return (c / 2) * t * t + b;
         t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
       };
 
       const animation = (currentTime: number) => {
@@ -79,29 +87,81 @@ export const FloatingNav = ({
           opacity: visible ? 1 : 0,
         }}
         transition={{
-          duration: 0.2,
+          duration: 0.3,
         }}
         className={cn(
-          "flex max-w-fit  fixed top-10 inset-x-0 mx-auto border rounded-lg shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] px-10 py-5 border-white/[0.2] bg-black-100 items-center justify-center space-x-4",
+          "flex fixed top-6 inset-x-0 mx-auto z-[5000] justify-between items-center",
           className
         )}
       >
-        {navItems.map((navItem, idx: number) => (
-          <a
-            key={`link=${idx}`}
-            href={navItem.link}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToElement(navItem.link.substring(1)); // Remove the "#" from the link
-            }}
-            className={cn(
-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+        <div className="max-w-7xl w-full mx-auto flex justify-between items-center px-5 py-3 backdrop-blur-lg bg-black-100/80 border border-white/10 rounded-full shadow-lg">
+          {/* Logo */}
+          <div className="flex items-center">
+            <a
+              href="#"
+              className="font-bold text-xl mr-6 bg-clip-text text-transparent bg-gradient-to-r from-purple to-blue-100"
+            >
+              LHH
+            </a>
+
+            {/* Navigation Items */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {navItems.map((navItem, idx: number) => (
+                <a
+                  key={`link=${idx}`}
+                  href={navItem.link}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToElement(navItem.link.substring(1)); // Remove the "#" from the link
+                  }}
+                  className="relative px-4 py-2 text-sm font-medium text-white-100 hover:text-white transition-colors rounded-full hover:bg-white/5"
+                >
+                  {navItem.name}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* Mobile Menu & Theme Toggle */}
+          <div className="flex items-center space-x-2">
+            {/* Theme Toggle */}
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-full bg-black-200/50 hover:bg-black-200/70 transition-colors border border-white/10"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <FiSun className="w-5 h-5 text-yellow-300" />
+                ) : (
+                  <FiMoon className="w-5 h-5 text-slate-400" />
+                )}
+              </button>
             )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="text-sm !cursor-pointer">{navItem.name}</span>
-          </a>
-        ))}
+
+            {/* Mobile Navigation Toggle */}
+            <div className="md:hidden">
+              <button
+                className="p-2 rounded-full bg-gradient-to-r from-purple/20 to-blue-100/20 backdrop-blur-md border border-white/10"
+                aria-label="Open mobile menu"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

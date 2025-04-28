@@ -1,50 +1,95 @@
 import React from "react";
-
 import { workExperience } from "@/data";
-import { Button } from "@/components/ui/moving-border";
+import { BsArrowRight } from "react-icons/bs";
 
 const Experience = () => {
   return (
-    <div className="py-20 w-full">
-      <h1 className="heading">
-        My <span className="text-purple">work experience</span>
-      </h1>
+    <div className="py-12 w-full">
+      <div className="flex flex-col items-center justify-center mb-16">
+        <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
+          Career Path
+        </h2>
+        <h1 className="text-4xl md:text-5xl font-bold">
+          My{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+            Experience
+          </span>
+        </h1>
+      </div>
 
-      <div className="w-full mt-12 grid lg:grid-cols-4 grid-cols-1 gap-10">
-        {workExperience.map((card) => (
-          <Button
-            key={card.id}
-            //   random duration will be fun , I think , may be not
-            duration={Math.floor(Math.random() * 10000) + 10000}
-            borderRadius="1.75rem"
-            style={{
-              //   add these two
-              //   you can generate the color from here https://cssgradient.io/
-              background: "rgb(4,7,29)",
-              backgroundColor:
-                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
-              // add this border radius to make it more rounded so that the moving border is more realistic
-              borderRadius: `calc(1.75rem* 0.96)`,
-            }}
-            // remove bg-white dark:bg-slate-900
-            className="flex-1 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+      {/* Timeline Design */}
+      <div className="relative flex flex-col space-y-8 w-full max-w-4xl mx-auto">
+        {/* Vertical Line */}
+        <div className="absolute top-0 left-8 md:left-1/2 md:-ml-1 h-full w-[2px] bg-gradient-to-b from-purple/80 via-white-100/20 to-transparent"></div>
+
+        {workExperience.map((job, index) => (
+          <div
+            key={job.id}
+            className={`relative flex items-center w-full ${
+              index % 2 === 0 ? "md:justify-start" : "md:justify-end"
+            } group`}
           >
-            <div className="flex lg:flex-row flex-col lg:items-center p-3 py-6 md:p-5 lg:p-10 gap-2">
-              <img
-                src={card.thumbnail}
-                alt={card.thumbnail}
-                className="lg:w-32 md:w-20 w-16"
-              />
-              <div className="lg:ms-5">
-                <h1 className="text-start text-xl md:text-2xl font-bold">
-                  {card.title}
-                </h1>
-                <p className="text-start text-white-100 mt-3 font-semibold">
-                  {card.desc}
-                </p>
+            {/* Timeline Dot */}
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-purple border-4 border-black-100 z-10"></div>
+
+            {/* Experience Card */}
+            <div
+              className={`relative w-full md:w-[calc(50%-2rem)] ${
+                index % 2 === 0 ? "md:ml-16" : "md:mr-16"
+              } 
+                         p-6 rounded-xl bg-gradient-to-br from-black-200/60 to-black-100/95 
+                         backdrop-blur-md border border-white/10 shadow-lg 
+                         hover:shadow-purple/20 hover:border-purple/30 transition-all duration-300
+                         group-hover:translate-y-[-4px]`}
+            >
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <img
+                    src={job.thumbnail}
+                    alt={job.title}
+                    className="w-16 h-16 object-contain rounded-lg bg-black-300/50 p-2"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium text-white-100/70">
+                    {job.duration || "2022 - Present"}
+                  </span>
+                  <h3 className="text-xl font-bold mt-1">{job.title}</h3>
+                  <h4 className="text-sm text-purple mb-3">
+                    {job.company || "Company Name"}
+                  </h4>
+                  <p className="text-white-100 text-sm leading-relaxed">
+                    {job.desc}
+                  </p>
+
+                  {/* Technologies/Skills Used */}
+                  {job.skills && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {job.skills.map((skill, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 text-xs rounded-full bg-black-300/40 text-white-100"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* View Details Link */}
+                  {job.link && (
+                    <a
+                      href={job.link}
+                      className="mt-4 inline-flex items-center text-sm text-purple hover:text-white-100 transition-colors duration-300 group"
+                    >
+                      <span>View Details</span>
+                      <BsArrowRight className="ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
-          </Button>
+          </div>
         ))}
       </div>
     </div>
