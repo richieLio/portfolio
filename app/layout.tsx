@@ -2,8 +2,28 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./provider";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Dynamically import the ModelPreloader with no SSR
+// This prevents the Three.js code from running during server-side rendering
+const ModelPreloader = dynamic(() => import("@/components/ModelPreloader"), {
+  ssr: false,
+});
+
+// Import PhoenixScroller component for zigzag animation on scroll
+// With loading priority to ensure it loads after page is ready
+const PhoenixScroller = dynamic(() => import("@/components/PhoenixScroller"), {
+  ssr: false,
+  loading: () => null,
+});
+
+// Import ModelDebugger conditionally for debugging in development
+// Commented out for production
+// const ModelDebugger = dynamic(() => import("@/components/ModelDebugger"), {
+//   ssr: false,
+// });
 
 export const metadata: Metadata = {
   title: "HoangLH's Portfolio",
@@ -24,8 +44,37 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* Preload 3D Models */}
+          <ModelPreloader />
+
+          {/* Phoenix model with zigzag movement */}
+          <PhoenixScroller />
+
+          {/* Model debugger - uncomment for debugging */}
+          {/* <ModelDebugger /> */}
+
+          {/* Main content */}
           {children}
         </ThemeProvider>
+
+        {/* Debug script to ensure Three.js loads properly */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              console.log("Checking THREE.js load status");
+              window.addEventListener('load', () => {
+                console.log("Window loaded, checking for THREE");
+                setTimeout(() => {
+                  if (window.THREE) {
+                    console.log("THREE.js is loaded");
+                  } else {
+                    console.log("THREE.js is not detected on window");
+                  }
+                }, 1000);
+              });
+            `,
+          }}
+        />
       </body>
     </html>
   );

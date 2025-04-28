@@ -7,7 +7,7 @@ import { BackgroundGradientAnimation } from "./ui/background-gradient-animation"
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       {/* Modern Gradient Background */}
       <BackgroundGradientAnimation
         containerClassName="min-h-screen w-full"
@@ -15,8 +15,9 @@ const Hero = () => {
       />
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-7xl px-4 md:px-8">
-        <div className="flex flex-col items-center justify-center w-full">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full max-w-7xl mx-auto px-4 md:px-8">
+        {/* Text Content */}
+        <div className="flex flex-col items-center justify-center w-full max-w-3xl py-8 md:py-0">
           <h2 className="text-center text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
             Full-Stack Developer
           </h2>
@@ -26,7 +27,7 @@ const Hero = () => {
             words="Transforming Ideas into Exceptional Digital Experiences"
           />
 
-          <p className="mb-8 text-center text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto text-white-100 leading-relaxed">
+          <p className="mb-8 text-center text-lg md:text-xl lg:text-2xl max-w-2xl text-white-100 leading-relaxed">
             Hi, I&apos;m Hoang, a passionate full-stack developer creating
             impactful web applications with modern technologies.
           </p>

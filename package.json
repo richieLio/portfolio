@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-three/drei": "^9.111.2",
-    "@react-three/fiber": "^8.17.5",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@sentry/nextjs": "^8.26.0",
+    "@types/three": "^0.176.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.28",
+    "gsap": "^3.12.7",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
