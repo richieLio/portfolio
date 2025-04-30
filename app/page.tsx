@@ -10,6 +10,7 @@ import Certifications from "@/components/Certifications";
 import Skills from "@/components/Skills";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { navItems } from "@/data";
+import PhoenixScroller from "@/components/PhoenixScroller";
 
 export default function Home() {
   return (
@@ -17,43 +18,48 @@ export default function Home() {
       {/* Navigation */}
       <FloatingNav navItems={navItems} />
 
+      {/* 3D Phoenix Model */}
+      <PhoenixScroller />
+
       {/* Hero Section - Full Height */}
-      <Hero />
+      <section id="banner" className="section scroll-mt-20">
+        <Hero />
+      </section>
 
       {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 space-y-32 py-20">
         {/* Featured Projects Grid */}
-        <section id="work" className="scroll-mt-20">
+        <section id="intro" className="section scroll-mt-20">
           <RecentProjects />
         </section>
 
         {/* Experience Timeline */}
-        <section id="experience" className="scroll-mt-20">
+        <section id="description" className="section scroll-mt-20">
           <Experience />
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="scroll-mt-20">
+        <section id="contact" className="section scroll-mt-20">
           <Skills />
         </section>
 
         {/* Custom Grid Display */}
-        <section className="scroll-mt-20">
+        <section className="section scroll-mt-20">
           <Gird />
         </section>
 
         {/* Publications & Accomplishments */}
-        <section id="publications" className="scroll-mt-20">
+        <section id="publications" className="section scroll-mt-20">
           <Publications />
         </section>
 
         {/* Certifications Section */}
-        <section id="certifications" className="scroll-mt-20">
+        <section id="certifications" className="section scroll-mt-20">
           <Certifications />
         </section>
 
         {/* My Approach */}
-        <section id="approach" className="scroll-mt-20">
+        <section id="approach" className="section scroll-mt-20">
           <Approach />
         </section>
       </div>
