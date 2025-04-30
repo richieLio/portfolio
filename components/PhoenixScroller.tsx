@@ -7,7 +7,7 @@ import { PerspectiveCamera, Environment } from "@react-three/drei";
 import PhoenixModel from "./PhoenixModel";
 
 /**
- * PhoenixScroller Component - Adds a Phoenix 3D model that follows zigzag path as user scrolls
+ * PhoenixScroller Component - Adds a Phoenix 3D model that moves in a zigzag spring-like pattern as user scrolls
  * This component creates a fixed canvas layer on top of the page content with the floating phoenix
  */
 export default function PhoenixScroller() {
@@ -59,23 +59,6 @@ export default function PhoenixScroller() {
     };
   }, []);
 
-  // Add console log to debug
-  useEffect(() => {
-    console.log("PhoenixScroller mounted, scrollY:", scrollY);
-  }, []);
-
-  // Debug scroll updates
-  useEffect(() => {
-    console.log(
-      "Scroll position updated:",
-      scrollY,
-      "direction:",
-      scrollDirection,
-      "speed:",
-      scrollSpeed
-    );
-  }, [scrollY, scrollDirection, scrollSpeed]);
-
   return (
     <div className="fixed inset-0 w-full h-full z-10 pointer-events-none">
       {isLoaded && (
@@ -89,7 +72,7 @@ export default function PhoenixScroller() {
           {/* <Stats /> */}
 
           <Suspense fallback={null}>
-            {/* Dynamic camera setup - now managed in PhoenixModel */}
+            {/* Fixed camera setup at consistent distance */}
             <PerspectiveCamera
               makeDefault
               position={[0, 0, 10]}
@@ -98,7 +81,7 @@ export default function PhoenixScroller() {
               far={1000}
             />
 
-            {/* Lighting setup for smaller model */}
+            {/* Lighting setup for model */}
             <ambientLight intensity={1.2} />
             <directionalLight
               position={[10, 10, 5]}
@@ -116,7 +99,7 @@ export default function PhoenixScroller() {
               castShadow
             />
 
-            {/* The Phoenix model with zigzag animation based on scroll */}
+            {/* The Phoenix model with spring-like zigzag animation based on scroll */}
             <PhoenixModel
               scrollY={scrollY}
               scrollDirection={scrollDirection}
@@ -126,7 +109,7 @@ export default function PhoenixScroller() {
             {/* Environment for better visualization */}
             <Environment preset="city" />
 
-            {/* Reduced fog for better visibility of smaller model */}
+            {/* Reduced fog for better visibility of model */}
             <fog attach="fog" args={["#000000", 35, 70]} />
           </Suspense>
         </Canvas>

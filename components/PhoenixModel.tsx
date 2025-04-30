@@ -32,13 +32,16 @@ export const PhoenixModel = ({
     });
   }, [scene, animations, actions, names]);
 
-  // Camera state
-  const cameraOffset = useRef(new THREE.Vector3(0, 1, 8)); // Camera offset from model
+  // Camera state - Using fixed camera offset to prevent zooming
+  const cameraOffset = useRef(new THREE.Vector3(0, 1, 8)); // Fixed camera offset
   const cameraTargetPosition = useRef(new THREE.Vector3()); // Target position for camera
   const cameraTargetLookAt = useRef(new THREE.Vector3()); // Target look position for camera
 
   // Last calculated movement direction - stored as ref to persist between renders without causing re-renders
   const movementDirection = useRef<{ x: number; z: number }>({ x: 0, z: 0 });
+
+  // Default direction the bird should face
+  const defaultDirection = useRef<THREE.Vector3>(new THREE.Vector3(0, 0, 1)); // Forward is positive Z
 
   // Boundary detection state
   const isAtBoundary = useRef(false);
@@ -55,14 +58,19 @@ export const PhoenixModel = ({
 
   // Current horizontal bounds
   const horizontalBounds = useRef<{ min: number; max: number }>({
-    min: -4,
-    max: 4,
+    min: -5,
+    max: 5,
   });
 
   // Smooth animation for idle state
   const idleTimer = useRef(0);
   const idleAmplitude = useRef(0.2);
   const boundaryReactionStrength = useRef(0);
+
+  // Spring motion parameters
+  const springAmplitude = useRef(3); // Spring amplitude
+  const springFrequency = useRef(3); // Spring frequency factor
+  const springPhase = useRef(0); // Spring phase offset
 
   // Scroll state
   const [prevScrollY, setPrevScrollY] = useState(0);
@@ -94,6 +102,9 @@ export const PhoenixModel = ({
       // Adjust scale - smaller size as requested
       scene.scale.set(0.006, 0.006, 0.006); // Reduced from 0.008 to 0.006
       scene.position.set(0, 0, 0);
+
+      // Set initial rotation to make bird face forward
+      scene.rotation.y = Math.PI; // Rotate 180 degrees to face forward
 
       // Ensure all meshes have proper material settings
       scene.traverse((child) => {
@@ -155,7 +166,7 @@ export const PhoenixModel = ({
     }
   }, [flyingSpeed, actions, names]);
 
-  // Spiral movement, rotation and camera control based on scroll position
+  // ZigZag movement, rotation and camera control based on scroll position
   useFrame(({ clock }) => {
     if (!modelRef.current || !camera) return;
 
@@ -229,60 +240,40 @@ export const PhoenixModel = ({
       }
     }
 
-    // SPIRAL PATTERN SETTINGS
-    // =======================
-    const spiralRadius = 4; // Base radius of the spiral
-    const spiralHeight = 15; // Total height of the spiral
-    const spiralTurns = 2.5; // Number of full turns in the spiral
+    // SPRING ZIGZAG PATTERN SETTINGS
+    // ==============================
 
-    // Calculate progress along the spiral (0 to 2π × number of turns)
-    const spiralAngle = normalizedScrollY * Math.PI * 2 * spiralTurns;
+    // Update spring phase based on scroll position
+    springPhase.current = normalizedScrollY * Math.PI * springFrequency.current;
 
-    // Calculate horizontal bounds - these will define our "walls"
-    // The spiral radius changes as we move up/down, so our bounds change too
-    const horizontalBoundaryFactor = 1.05; // 5% outside the normal radius as threshold
-    horizontalBounds.current = {
-      min: -spiralRadius * horizontalBoundaryFactor,
-      max: spiralRadius * horizontalBoundaryFactor,
-    };
+    // Calculate zigzag pattern (spring-like left-right movement)
+    // Use sine waves for natural spring motion
+    const springX =
+      springAmplitude.current * Math.sin(springPhase.current * 2.5);
 
-    // Calculate spiral radius with breathing effect
-    // Add stronger breathing effect when idle for more interesting hover state
+    // Add breathing effect when idle
     const idleBreathingEffect =
       Math.sin(elapsedTime * 0.5) * 0.1 +
       (idleTimer.current > 1 ? Math.sin(elapsedTime * 0.8) * 0.15 : 0);
 
-    // Calculate spiral radius that gets tighter as we progress
-    const dynamicRadius =
-      spiralRadius *
-      (1 - normalizedScrollY * 0.3) * // Gradually reduce radius as we scroll down
-      (1 + idleBreathingEffect); // Add breathing effect
+    // Calculate x position with spring-like zigzag effect
+    const xPosition =
+      springX + (idleTimer.current > 1 ? Math.sin(elapsedTime * 0.3) * 0.5 : 0);
 
-    // Calculate position on spiral - X and Z form the circular part of the spiral
-    const xPosition = dynamicRadius * Math.cos(spiralAngle);
-    const zPosition = dynamicRadius * Math.sin(spiralAngle);
+    // Calculate z position with smaller oscillation (for depth)
+    const zPosition = Math.sin(springPhase.current * 1.5) * 2;
 
     // SIDE EDGE DETECTION
     // =================
-    // Check if we're at a side edge (left or right of spiral)
+    // Check if we're at a side edge (left or right)
     const wasAtSideEdge = isAtSideEdge.current;
-    const spiralAngleDelta = spiralAngle - lastSpiralAngle.current;
     const currentTime = elapsedTime;
     const edgeHitCooldown = 1.0; // Prevent rapid edge hits (in seconds)
 
-    // Only check for edge hits if we've moved enough along the spiral
-    // and not during the cooldown period after a previous hit
-    if (
-      Math.abs(spiralAngleDelta) > 0.05 &&
-      currentTime - lastEdgeHitTime.current > edgeHitCooldown
-    ) {
-      // Calculate an edge hit based on x-position compared to horizontal bounds
-      // and direction of movement
-      const isMovingRight = xPosition > lastXPosition;
-      const isMovingLeft = xPosition < lastXPosition;
-
-      // Left edge hit - we're at the left bound and still trying to move left
-      if (xPosition <= horizontalBounds.current.min && isMovingLeft) {
+    // Check for edge hits if not in cooldown
+    if (currentTime - lastEdgeHitTime.current > edgeHitCooldown) {
+      // Left edge hit
+      if (xPosition <= horizontalBounds.current.min && springX < 0) {
         isAtSideEdge.current = true;
         sideEdgeDirection.current = -1; // left edge
 
@@ -290,14 +281,14 @@ export const PhoenixModel = ({
         if (!wasAtSideEdge) {
           sideEdgeTimer.current = 0;
           sideEdgeReactionStrength.current = Math.min(
-            Math.abs(spiralAngleDelta) * 5,
+            Math.abs(scrollSpeed) * 5,
             1
           );
           lastEdgeHitTime.current = currentTime;
         }
       }
-      // Right edge hit - we're at the right bound and still trying to move right
-      else if (xPosition >= horizontalBounds.current.max && isMovingRight) {
+      // Right edge hit
+      else if (xPosition >= horizontalBounds.current.max && springX > 0) {
         isAtSideEdge.current = true;
         sideEdgeDirection.current = 1; // right edge
 
@@ -305,7 +296,7 @@ export const PhoenixModel = ({
         if (!wasAtSideEdge) {
           sideEdgeTimer.current = 0;
           sideEdgeReactionStrength.current = Math.min(
-            Math.abs(spiralAngleDelta) * 5,
+            Math.abs(scrollSpeed) * 5,
             1
           );
           lastEdgeHitTime.current = currentTime;
@@ -331,9 +322,6 @@ export const PhoenixModel = ({
       }
     }
 
-    // Store current spiral angle for next frame
-    lastSpiralAngle.current = spiralAngle;
-
     // Y position - start higher and move down as user scrolls
     // Add a slight oscillation for more natural movement - enhanced when idle
     const idleHoverAmount =
@@ -355,8 +343,8 @@ export const PhoenixModel = ({
 
     const yPosition =
       7 -
-      normalizedScrollY * spiralHeight +
-      Math.sin(elapsedTime * 1.2) * 0.2 +
+      normalizedScrollY * 15 + // Linear vertical movement with scroll
+      Math.sin(elapsedTime * 1.2) * 0.2 + // Small natural up/down movement
       idleHoverAmount +
       boundaryBounce +
       sideEdgeBounce;
@@ -432,14 +420,15 @@ export const PhoenixModel = ({
           baseRotation + Math.cos(boundaryTimer.current * 4) * lookAroundFactor;
       }
     } else if (scrollSpeed < 0.1 && idleTimer.current > 1) {
-      // When idle, slowly rotate to face a consistent direction or add gentle swaying
-      // This creates a more natural "hovering" behavior
+      // When idle, ensure the bird is facing forward by default with gentle swaying
       const idleRotation = Math.sin(elapsedTime * 0.2) * 0.2;
-      targetRotationY =
-        Math.atan2(movementDirection.current.x, movementDirection.current.z) +
-        idleRotation;
+
+      // Use a consistent forward direction in the idle state
+      // We add Pi because our model's forward direction is +Z in this case
+      targetRotationY = Math.PI + idleRotation;
     } else {
       // When moving, face the direction of movement
+      // Add PI because we want to face the direction we're moving, not away from it
       targetRotationY = Math.atan2(
         movementDirection.current.x,
         movementDirection.current.z
@@ -554,88 +543,36 @@ export const PhoenixModel = ({
 
     // CAMERA CONTROL
     // =============
+    // Fixed camera control to prevent unwanted zoom effect
 
     // Calculate bird's forward direction vector based on its rotation
     const birdDirection = new THREE.Vector3(0, 0, -1);
     birdDirection.applyQuaternion(modelRef.current.quaternion);
 
-    // Calculate desired camera position based on bird's position and orientation
-    // Adjust dynamic offset for dramatic effect during up/down scrolling or at boundaries
-    let cameraYOffset = cameraOffset.current.y + scrollDirection * 0.5;
-    let cameraZOffset = cameraOffset.current.z + Math.abs(scrollDirection) * 1;
-    let cameraXOffset = cameraOffset.current.x;
+    // Use fixed camera offset to prevent zooming effect
+    const fixedCameraPosition = new THREE.Vector3();
+    fixedCameraPosition
+      .copy(modelRef.current.position)
+      .add(cameraOffset.current);
 
-    // Additional camera adjustments for boundary reactions
+    // Only add very minor camera adjustments for dramatic movements
     if (isAtSideEdge.current) {
-      // Pull camera back and to the side a bit to better see the edge reaction
-      cameraZOffset += 2 * sideEdgeReactionStrength.current;
-      cameraXOffset +=
-        sideEdgeDirection.current * sideEdgeReactionStrength.current * 0.5;
-    } else if (isAtBoundary.current) {
-      if (boundaryDirection.current === -1) {
-        // At top - pull camera back and higher to see bird looking up
-        cameraYOffset += 1 * boundaryReactionStrength.current;
-        cameraZOffset += 2 * boundaryReactionStrength.current;
-      } else {
-        // At bottom - pull camera back and lower to see bird looking down
-        cameraYOffset -= 1 * boundaryReactionStrength.current;
-        cameraZOffset += 2 * boundaryReactionStrength.current;
-      }
-    } else if (idleTimer.current > 1) {
-      // Add gentle up/down when idle
-      cameraYOffset += Math.sin(elapsedTime * 0.5) * 0.2;
+      // Add very small side adjustment when hitting edges
+      fixedCameraPosition.x +=
+        sideEdgeDirection.current * 0.2 * sideEdgeReactionStrength.current;
     }
 
-    const dynamicOffset = new THREE.Vector3(
-      cameraXOffset,
-      cameraYOffset,
-      cameraZOffset
-    );
-
-    // Transform offset to bird's local space
-    const worldOffset = dynamicOffset
-      .clone()
-      .applyQuaternion(modelRef.current.quaternion);
-
-    // Calculate target camera position
-    cameraTargetPosition.current
+    // Calculate look-ahead point for camera
+    const fixedLookTarget = new THREE.Vector3();
+    fixedLookTarget
       .copy(modelRef.current.position)
-      .add(worldOffset);
+      .add(birdDirection.multiplyScalar(2));
 
-    // Calculate look-ahead point - bird position plus forward direction
-    // Look ahead by different amounts based on scroll speed or boundary state
-    let lookAheadFactor = 2 + scrollSpeed * 0.5;
-
-    // Adjust look-ahead for boundary reactions
-    if (isAtSideEdge.current) {
-      // Reduce look-ahead distance to focus more on the bird's side edge reaction
-      lookAheadFactor = 1.2;
-    } else if (isAtBoundary.current) {
-      // Reduce look-ahead distance to focus more on the bird's reaction
-      lookAheadFactor = 1.5;
-    }
-
-    cameraTargetLookAt.current
-      .copy(modelRef.current.position)
-      .add(birdDirection.clone().multiplyScalar(lookAheadFactor));
-
-    // Smoothly move camera to target position
-    // Faster camera response at boundaries for more dramatic effect
-    const cameraLerpFactor = isAtSideEdge.current
-      ? 0.15 // Fastest for side edges
-      : isAtBoundary.current
-      ? 0.12 // Fast for boundaries
-      : 0.07; // Normal speed otherwise
-
+    // Apply much slower camera motion to prevent jerky/zooming appearance
     if (camera instanceof THREE.PerspectiveCamera) {
-      camera.position.lerp(cameraTargetPosition.current, cameraLerpFactor);
-
-      // Create a temporary vector for the camera to look at
-      const tempLookAt = new THREE.Vector3();
-      tempLookAt.copy(cameraTargetLookAt.current);
-
-      // Smoothly adjust camera look target
-      camera.lookAt(tempLookAt);
+      // Very slow camera movement for smoother transitions
+      camera.position.lerp(fixedCameraPosition, 0.03);
+      camera.lookAt(fixedLookTarget);
     }
   });
 
