@@ -76,13 +76,14 @@ export const PhoenixModel = ({
   const [prevScrollY, setPrevScrollY] = useState(0);
   const [lastXPosition, setLastXPosition] = useState(0);
   const [lastZPosition, setLastZPosition] = useState(0);
-  const [flyingSpeed, setFlyingSpeed] = useState(1);
+  const [flyingSpeed, setFlyingSpeed] = useState(0.5); // Reduced initial speed to half (from 1 to 0.5)
 
   // Calculate flying speed based on provided scroll speed
   useEffect(() => {
     // Update flying speed based on scroll speed
-    // Scale from 0.5 (minimum) to 3 (max speed)
-    const newSpeed = scrollSpeed === 0 ? 1 : 0.5 + Math.min(scrollSpeed, 2.5);
+    // Scale from 0.25 (minimum) to 1.5 (max speed) - reduced to half of original values
+    const newSpeed =
+      scrollSpeed === 0 ? 0.5 : 0.25 + Math.min(scrollSpeed, 2.5) / 2;
     setFlyingSpeed(newSpeed);
 
     // Reset idle timer when scrolling
@@ -139,7 +140,8 @@ export const PhoenixModel = ({
         action?.reset().play();
 
         if (action) {
-          action.setEffectiveTimeScale(1);
+          // Set initial animation speed to half (0.5)
+          action.setEffectiveTimeScale(0.5);
         }
       } else if (names.length > 0) {
         console.log("Falling back to first animation:", names[0]);
