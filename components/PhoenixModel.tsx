@@ -31,7 +31,7 @@ const sectionPositions = [
     entranceRotation: { x: -Math.PI, y: 0, z: Math.PI }, // Lộn ngược nửa vòng theo trục x và z
   },
   {
-    id: "contact",
+    id: "skills",
     position: { x: -4, y: -1, z: 0 },
     rotation: { x: 0.3, y: 0.8, z: 0.1 },
     entranceRotation: { x: Math.PI, y: Math.PI, z: 0 }, // Lộn ngược và xoay 180 độ

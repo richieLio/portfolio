@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import TelegramBot from 'node-telegram-bot-api';
+
+// Telegram Bot configuration
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID_HERE';
+
+// Initialize the bot (using polling: false since we're just sending messages)
+const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: false });
 
 export async function POST(request: Request) {
   try {
@@ -13,48 +20,30 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create a transporter with hardcoded credentials
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        // Thay thế bằng email và mật khẩu của bạn
-        user: 'lhuyhoang18903@gmail.com',
-        pass: 'your-app-password-here',  // Sử dụng App Password từ Google nếu dùng Gmail
-      },
+    // Format message for Telegram
+    const telegramMessage = `
+📬 *New Contact Form Submission*
+
+*Name:* ${name}
+*Email:* ${email}
+
+*Message:*
+${message}
+`;
+
+    // Send message to Telegram
+    await bot.sendMessage(TELEGRAM_CHAT_ID, telegramMessage, {
+      parse_mode: 'Markdown',
     });
 
-    // Email content
-    const mailOptions = {
-      from: 'lhuyhoang18903@gmail.com',
-      to: 'lhuyhoang18903@gmail.com',
-      subject: `New contact from ${name}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        
-        Message:
-        ${message}
-      `,
-      html: `
-        <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
-    };
-
-    // Send email
-    await transporter.sendMail(mailOptions);
-
     return NextResponse.json(
-      { message: 'Email sent successfully' },
+      { message: 'Message sent successfully' },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending message to Telegram:', error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'Failed to send message' },
       { status: 500 }
     );
   }

@@ -20,6 +20,26 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Telegram Bot Setup for Contact Form
+
+This project uses a Telegram bot to receive contact form submissions. To set up the bot:
+
+1. Create a new Telegram bot by messaging [@BotFather](https://t.me/botfather) on Telegram
+2. Use the `/newbot` command and follow the instructions
+3. BotFather will give you a bot token - copy this token
+4. Start a conversation with your new bot
+5. Get your chat ID by:
+   - Sending a message to your bot
+   - Visiting `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+   - Look for the `"chat":{"id":123456789}` value in the response
+6. Update the `.env.local` file with your bot token and chat ID:
+   ```
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+   TELEGRAM_CHAT_ID=your_chat_id_here
+   ```
+
+Now when someone submits your contact form, you'll receive the message directly in your Telegram app.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

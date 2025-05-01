@@ -37,7 +37,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="contact" className="section scroll-mt-20">
+        <section id="skills" className="section scroll-mt-20">
           <Skills />
         </section>
 
@@ -53,7 +53,9 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <Footer />
+      <section id="contact" className="section scroll-mt-20">
+        <Footer />
+      </section>
     </main>
   );
 }

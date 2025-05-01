@@ -90,7 +90,7 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 mb-8">
-            <a href="#work">
+            <a href="#intro">
               <MagicButton
                 title="View My Work"
                 icon={<FaLocationArrow />}

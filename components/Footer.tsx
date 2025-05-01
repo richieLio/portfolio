@@ -157,6 +157,9 @@ const Footer = () => {
             {/* Contact Form */}
             <div className="bg-black-100/60 p-6 rounded-xl border border-white/5">
               <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
+              <p className="text-white-100/70 mb-4">
+                I&apos;ll receive your message instantly via Telegram!
+              </p>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {status.submitted && (
                   <div
@@ -224,7 +227,7 @@ const Footer = () => {
                   <button
                     type="submit"
                     disabled={status.submitting}
-                    className="relative inline-flex items-center px-6 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-purple to-blue-100 text-white font-medium
+                    className="relative inline-flex items-center px-6 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-blue-100 to-purple text-black font-medium
                              transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.98] 
                              disabled:opacity-70 disabled:cursor-not-allowed"
                   >
