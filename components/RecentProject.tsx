@@ -32,16 +32,21 @@ const RecentProjects = () => {
 
   return (
     <div className="py-20" id="projects">
-      <h1 className="heading mb-4">
-        A small selection of{" "}
-        <span className="text-purple">recent projects</span>
-      </h1>
-      <p className="text-center text-white-100/70 mb-6">
-        Showing all {projects.length} projects (scroll to see more)
-      </p>
+      <div className="flex flex-col md:flex-row items-center">
+        <div className="hidden md:block md:w-5/12 lg:w-5/12"></div>
+
+        <div className="md:w-7/12 lg:w-7/12">
+          <h1 className="heading mb-4">
+            A small selection of{" "}
+            <span className="text-purple">recent projects</span>
+          </h1>
+          <p className="text-center md:text-left text-white-100/70 mb-6">
+            Showing all {projects.length} projects (scroll to see more)
+          </p>
+        </div>
+      </div>
 
       <div className="relative w-full mt-6">
-        {/* Navigation Arrows */}
         {showLeftArrow && (
           <button
             onClick={() => scroll("left")}
@@ -62,7 +67,6 @@ const RecentProjects = () => {
           </button>
         )}
 
-        {/* Horizontal scrollable container */}
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -132,7 +136,6 @@ const RecentProjects = () => {
           </div>
         </div>
 
-        {/* Scroll Indicators */}
         <div className="flex justify-center mt-4 gap-2">
           {projects.map((_, index) => (
             <div
@@ -151,7 +154,6 @@ const RecentProjects = () => {
           ))}
         </div>
 
-        {/* Add CSS for hiding scrollbar */}
         <style jsx global>{`
           .hide-scrollbar::-webkit-scrollbar {
             display: none;

@@ -71,8 +71,10 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right Side - Empty Space */}
-        <div className="hidden md:block md:w-1/2 lg:w-5/12"></div>
+        {/* Right Side - Space for 3D Model */}
+        <div className="hidden md:block md:w-1/2 lg:w-5/12">
+          {/* Không cần thêm nội dung ở đây vì trực thăng sẽ hiển thị ở vị trí này */}
+        </div>
       </div>
 
       {/* Scroll Indicator */}
