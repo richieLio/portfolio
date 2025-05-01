@@ -6,12 +6,12 @@ import { useGLTF } from "@react-three/drei";
 // This component is used to preload GLB/GLTF models before they're needed
 const ModelPreloader = () => {
   useEffect(() => {
-    // Preload Phoenix model
-    useGLTF.preload("/glb/phoenix_bird.glb");
+    // Preload Helicopter model
+    useGLTF.preload("/glb/helicopter.glb");
 
     return () => {
       // Dispose cache when component unmounts
-      useGLTF.clear("/glb/phoenix_bird.glb");
+      useGLTF.clear("/glb/helicopter.glb");
     };
   }, []);
 

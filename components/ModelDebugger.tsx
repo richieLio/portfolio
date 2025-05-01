@@ -7,7 +7,7 @@ import * as THREE from "three";
 // Component to help debug model loading issues
 export default function ModelDebugger() {
   // Load model directly with the hook
-  const { scene, animations } = useGLTF("/glb/phoenix_bird.glb");
+  const { scene, animations } = useGLTF("/glb/helicopter.glb");
 
   const [modelInfo, setModelInfo] = useState<{
     loaded: boolean;
@@ -20,7 +20,7 @@ export default function ModelDebugger() {
   });
 
   useEffect(() => {
-    console.log("ModelDebugger: Checking phoenix_bird.glb...");
+    console.log("ModelDebugger: Checking helicopter.glb...");
 
     // Check if model loads properly
     try {

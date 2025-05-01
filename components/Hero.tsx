@@ -15,25 +15,25 @@ const Hero = () => {
       />
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full max-w-7xl mx-auto px-4 md:px-8">
-        {/* Text Content */}
-        <div className="flex flex-col items-center justify-center w-full max-w-3xl py-8 md:py-0">
-          <h2 className="text-center text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
+      <div className="relative z-10 flex min-h-screen w-full max-w-7xl mx-auto px-4 md:px-8">
+        {/* Text Content - Left Side */}
+        <div className="flex flex-col justify-center w-full md:w-1/2 lg:w-7/12 py-8 md:py-0">
+          <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
             Full-Stack Developer
           </h2>
 
           <TextGenerateEffect
-            className="text-center text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple mb-6"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple mb-6"
             words="Transforming Ideas into Exceptional Digital Experiences"
           />
 
-          <p className="mb-8 text-center text-lg md:text-xl lg:text-2xl max-w-2xl text-white-100 leading-relaxed">
+          <p className="mb-8 text-lg md:text-xl lg:text-2xl max-w-xl text-white-100 leading-relaxed">
             Hi, I&apos;m Hoang, a passionate full-stack developer creating
             impactful web applications with modern technologies.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 justify-center mb-12">
+          <div className="flex flex-wrap gap-4 mb-12">
             <a href="#work">
               <MagicButton
                 title="View My Work"
@@ -70,6 +70,9 @@ const Hero = () => {
             </a>
           </div>
         </div>
+
+        {/* Right Side - Empty Space */}
+        <div className="hidden md:block md:w-1/2 lg:w-5/12"></div>
       </div>
 
       {/* Scroll Indicator */}
