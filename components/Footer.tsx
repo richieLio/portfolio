@@ -1,12 +1,77 @@
+"use client";
+
 import { FaLocationArrow, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { HiMail } from "react-icons/hi";
 import { FiPhone } from "react-icons/fi";
 import { socialMedia } from "@/data";
 import MagicButton from "@/components/ui/MagicButton";
 import { BackgroundGradientAnimation } from "./ui/background-gradient-animation";
+import { useState } from "react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState({
+    submitting: false,
+    submitted: false,
+    error: false,
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus({
+      submitting: true,
+      submitted: false,
+      error: false,
+      message: "",
+    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({
+          submitting: false,
+          submitted: true,
+          error: false,
+          message: "Your message has been sent successfully!",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error(data.error || "Failed to send message");
+      }
+    } catch (error) {
+      setStatus({
+        submitting: false,
+        submitted: true,
+        error: true,
+        message:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred",
+      });
+    }
+  };
 
   return (
     <footer className="relative pt-24 pb-10 overflow-hidden" id="contact">
@@ -61,7 +126,7 @@ const Footer = () => {
                     href="tel:+84123456789"
                     className="text-white-100 hover:text-purple transition-colors"
                   >
-                    +84 123 456 789
+                    +84 813 021 124
                   </a>
                 </div>
               </div>
@@ -92,7 +157,18 @@ const Footer = () => {
             {/* Contact Form */}
             <div className="bg-black-100/60 p-6 rounded-xl border border-white/5">
               <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
-              <form className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {status.submitted && (
+                  <div
+                    className={`p-3 rounded-lg ${
+                      status.error
+                        ? "bg-red-500/20 text-red-200"
+                        : "bg-green-500/20 text-green-200"
+                    } mb-4`}
+                  >
+                    {status.message}
+                  </div>
+                )}
                 <div>
                   <label
                     htmlFor="name"
@@ -104,6 +180,9 @@ const Footer = () => {
                     type="text"
                     id="name"
                     placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                     className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
                   />
                 </div>
@@ -118,6 +197,9 @@ const Footer = () => {
                     type="email"
                     id="email"
                     placeholder="Your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
                   />
                 </div>
@@ -132,15 +214,28 @@ const Footer = () => {
                     id="message"
                     rows={4}
                     placeholder="Your message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     className="w-full bg-black-200/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white-100/50 focus:outline-none focus:ring-2 focus:ring-purple/50"
                   />
                 </div>
                 <div>
-                  <MagicButton
-                    title="Send Message"
-                    icon={<FaLocationArrow />}
-                    position="right"
-                  />
+                  <button
+                    type="submit"
+                    disabled={status.submitting}
+                    className="relative inline-flex items-center px-6 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-purple to-blue-100 text-white font-medium
+                             transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.98] 
+                             disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {status.submitting ? (
+                      "Sending..."
+                    ) : (
+                      <>
+                        Send Message <FaLocationArrow className="ml-2" />
+                      </>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

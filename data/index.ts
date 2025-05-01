@@ -79,32 +79,28 @@ export const projects = [
     des: "Built a desktop application for managing room reservations using WPF and .NET. Designed with MVVM architecture for better maintainability. Integrated SQL Server for room data storage and efficient querying. Implemented real-time notifications for booking status updates.",
     img: "/rms.jpg",
     iconLists: ["/csharp.svg", "/firebase.svg", "/xaml.svg", "/sql.svg"],
-    link: "https://github.com/richieLio/PRN221_FinalProject",
   },
   {
     id: 2,
     title: "Sports Schedule Booking Web Application",
     des: "Developed a web platform for booking sports fields using Next.js (TypeScript) and .NET backend. Implemented real-time updates with SignalR for instant booking confirmations. Optimized database queries with MySQL, ensuring fast performance. Deployed via Docker, Nginx with CI/CD. Added websocket for real-time chat functionality.",
     img: "/ssb.png",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/csharp.svg", "/netlify.svg"],
-    link: "https://github.com/richieLio/NEXTJS-FE",
+    iconLists: ["/next.svg", "/tail.svg", "/typescript.svg", "/csharp.svg", "/netlify.svg"],
   },
   {
     id: 3,
     title: "Mai Assistant – AI Chatbot with RAG",
     des: "An AI chatbot for customer support leveraging Retrieval-Augmented Generation (RAG) for accurate responses. Built with Python, FastAPI, MongoDB, SentenceTransformer, PhoBERT, and spaCy. Features include contextual search, real-time answers, and content moderation, resulting in faster support and improved user experience.",
-    img: "/p3.svg",
-    iconLists: ["/re.svg", "/ts.svg", "/c.svg"],
-    link: "#",
+    img: "/mai.png",
+    iconLists: ["/python.svg", "/fastapi.svg", "/mongodb.svg", "/sentence.svg", "/phobert.svg", "/spacy.svg"],
   },
-  // {
-  //   id: 4,
-  //   title: "Animated Apple Iphone 3D Website",
-  //   des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-  //   img: "/p4.svg",
-  //   iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
-  //   link: "https://github.com/adrianhajdin/iphone",
-  // },
+  {
+    id: 4,
+    title: "Modern Web Development Portfolio",
+    des: "A modern personal portfolio showcasing skills and projects using Next.js, React, and Tailwind CSS. Features include responsive design, interactive 3D elements, and smooth animations for enhanced user experience.",
+    img: "/pflo.png",
+    iconLists: ["/react.svg", "/typescript.svg", "/javascript.svg", "/html5.svg", "/css3.svg"],
+  },
 ];
 
 // Publications section
@@ -228,7 +224,7 @@ export const workExperience = [
     id: 1,
     title: "Software Engineering Intern",
     company: "FPT Software",
-    duration: "2024 - Present",
+    duration: "2024",
     desc: "Interned at FPT Software, Ho Chi Minh City (2024), where I developed and maintained .NET-based applications, focusing on backend API development. Assisted in frontend development using React.js and worked with MySQL for database management.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
@@ -237,20 +233,9 @@ export const workExperience = [
   },
   {
     id: 2,
-    title: "AI Research Contributor",
-    company: "Academic Research",
-    duration: "2023 - 2024",
-    desc: "Published research on Face Recognition and Student Attendance Systems in international conferences using ML/AI techniques including TensorFlow, OpenCV, and ensemble learning approaches.",
-    className: "md:col-span-2",
-    thumbnail: "/exp2.svg",
-    skills: ["TensorFlow", "OpenCV", "Python", "Machine Learning"],
-    link: "#publications"
-  },
-  {
-    id: 3,
     title: "Freelance Web Development",
     company: "Self-employed",
-    duration: "2022 - 2023",
+    duration: "2023 - 2024",
     desc: "Led the development of web applications for clients, from initial concept to deployment on live servers using modern web technologies. Implemented responsive designs and optimized performance for enhanced user experience.",
     className: "md:col-span-2",
     thumbnail: "/exp3.svg",
@@ -326,7 +311,7 @@ export const technicalSkills = [
     id: 7,
     category: "AI & Machine Learning",
     skills: "Python, OpenCV, TensorFlow, Scikit-learn, Flask/FastAPI",
-    icon: "/ts.svg" 
+    icon: "/ai.png" 
   },
   {
     id: 8,

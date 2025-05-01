@@ -1,8 +1,6 @@
 // Home.tsx
-import Approach from "@/components/Approach";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
-import Gird from "@/components/Gird";
 import Hero from "@/components/Hero";
 import RecentProjects from "@/components/RecentProject";
 import Publications from "@/components/Publications";
@@ -43,11 +41,6 @@ export default function Home() {
           <Skills />
         </section>
 
-        {/* Custom Grid Display */}
-        <section className="section scroll-mt-20">
-          <Gird />
-        </section>
-
         {/* Publications & Accomplishments */}
         <section id="publications" className="section scroll-mt-20">
           <Publications />
@@ -56,11 +49,6 @@ export default function Home() {
         {/* Certifications Section */}
         <section id="certifications" className="section scroll-mt-20">
           <Certifications />
-        </section>
-
-        {/* My Approach */}
-        <section id="approach" className="section scroll-mt-20">
-          <Approach />
         </section>
       </div>
 
