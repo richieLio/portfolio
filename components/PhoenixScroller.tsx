@@ -3,11 +3,16 @@
 import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { PerspectiveCamera, Environment } from "@react-three/drei";
+import {
+  PerspectiveCamera,
+  Environment,
+  Cloud,
+  Sparkles,
+} from "@react-three/drei";
 import PhoenixModel from "./PhoenixModel";
 
 /**
- * PhoenixScroller Component - Adds a Phoenix 3D model that moves between sections
+ * PhoenixScroller Component - Adds a Helicopter 3D model that flies through clouds
  */
 export default function PhoenixScroller() {
   // Track scroll position and current section
@@ -73,11 +78,12 @@ export default function PhoenixScroller() {
   }, [currentSection]);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-10 pointer-events-none">
+    <div className="fixed inset-0 w-full h-full z-5 pointer-events-none">
       {isLoaded && (
         <Canvas
           style={{ background: "transparent" }}
           gl={{ alpha: true, antialias: true }}
+          camera={{ position: [0, 0, 10], fov: 45 }}
         >
           <Suspense fallback={null}>
             {/* Camera setup */}
@@ -86,12 +92,75 @@ export default function PhoenixScroller() {
             {/* Lighting */}
             <ambientLight intensity={1.3} />
             <directionalLight position={[500, 500, 500]} intensity={1.0} />
+            <directionalLight
+              position={[-500, -500, -500]}
+              intensity={0.2}
+              color="#e1e5f2"
+            />
 
-            {/* The Phoenix model */}
+            {/* Cloud particles in 3D space */}
+            <group>
+              <Cloud
+                opacity={0.5}
+                speed={0.4}
+                seed={1}
+                segments={20}
+                position={[0, 3, -5]}
+              />
+              <Cloud
+                opacity={0.3}
+                speed={0.3}
+                seed={2}
+                segments={15}
+                position={[-8, 2, -10]}
+              />
+              <Cloud
+                opacity={0.4}
+                speed={0.2}
+                seed={3}
+                segments={18}
+                position={[8, -2, -8]}
+              />
+              <Cloud
+                opacity={0.4}
+                speed={0.2}
+                seed={3}
+                segments={18}
+                position={[0, -2, -8]}
+              />
+              {/* Added cloud at bottom left corner */}
+              <Cloud
+                opacity={0.5}
+                speed={0.25}
+                seed={4}
+                segments={22}
+                position={[-10, -5, -7]}
+              />
+              {/* Added cloud at bottom right corner */}
+              <Cloud
+                opacity={0.5}
+                speed={0.3}
+                seed={5}
+                segments={20}
+                position={[10, -5, -9]}
+              />
+            </group>
+
+            {/* Sun rays / light particles */}
+            <Sparkles
+              count={100}
+              scale={10}
+              size={2}
+              speed={0.3}
+              opacity={0.2}
+              color="white"
+            />
+
+            {/* The Helicopter model */}
             <PhoenixModel scrollY={scrollY} currentSection={currentSection} />
 
-            {/* Environment */}
-            <Environment preset="city" />
+            {/* Sky Environment */}
+            <Environment preset="dawn" />
           </Suspense>
         </Canvas>
       )}

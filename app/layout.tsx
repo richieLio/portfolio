@@ -14,10 +14,11 @@ const ModelPreloader = dynamic(() => import("@/components/ModelPreloader"), {
 
 // Import PhoenixScroller component for zigzag animation on scroll
 // With loading priority to ensure it loads after page is ready
-const PhoenixScroller = dynamic(() => import("@/components/PhoenixScroller"), {
-  ssr: false,
-  loading: () => null,
-});
+// Moved to page.tsx to properly position behind content
+// const PhoenixScroller = dynamic(() => import("@/components/PhoenixScroller"), {
+//   ssr: false,
+//   loading: () => null,
+// });
 
 // Import ModelDebugger conditionally for debugging in development
 // Commented out for production
@@ -47,8 +48,8 @@ export default function RootLayout({
           {/* Preload 3D Models */}
           <ModelPreloader />
 
-          {/* Phoenix model with zigzag movement */}
-          <PhoenixScroller />
+          {/* Phoenix model with zigzag movement - Moved to page.tsx */}
+          {/* <PhoenixScroller /> */}
 
           {/* Model debugger - uncomment for debugging */}
           {/* <ModelDebugger /> */}

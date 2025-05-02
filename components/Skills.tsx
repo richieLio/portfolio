@@ -9,26 +9,17 @@ const Skills = () => {
   const [activeTab, setActiveTab] = useState("technical");
 
   return (
-    <div className="py-16 w-full" id="skills">
-      <div className="flex flex-col md:flex-row items-center mb-16">
-        <div className="hidden md:block md:w-5/12 lg:w-5/12"></div>
-
-        <div className="md:w-7/12 lg:w-7/12">
-          <div className="flex flex-col items-center md:items-start justify-center">
-            <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
-              Professional Expertise
-            </h2>
-            <h1 className="text-4xl md:text-5xl font-bold">
-              My{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
-                Skills
-              </span>
-            </h1>
-          </div>
-        </div>
+    <div className="w-full py-16" id="skills">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold">
+          My{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+            Skills
+          </span>
+        </h1>
       </div>
 
-      <div className="flex justify-center md:justify-end md:pr-16 mb-10">
+      <div className="flex justify-center mb-10">
         <div className="bg-black-200/50 backdrop-blur-md p-1 rounded-full">
           <button
             onClick={() => setActiveTab("technical")}
@@ -55,10 +46,10 @@ const Skills = () => {
         </div>
       </div>
 
-      <div className="md:w-7/12 md:ml-auto">
+      <div className="w-full">
         {activeTab === "technical" ? (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -74,7 +65,7 @@ const Skills = () => {
           </motion.div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}

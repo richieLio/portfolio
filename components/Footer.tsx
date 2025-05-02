@@ -84,7 +84,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         {/* Contact Section */}
         <div className="bg-gradient-to-r from-black-200/80 to-black-100/90 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 mb-16 shadow-xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">

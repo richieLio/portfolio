@@ -194,35 +194,22 @@ const PublicationCard = ({
 
 const Publications = () => {
   return (
-    <div className="py-16 w-full" id="publications">
-      {/* Chỉnh layout để tiêu đề nằm bên trái */}
-      <div className="flex flex-col md:flex-row items-center mb-16">
-        {/* Nội dung bên trái */}
-        <div className="md:w-7/12 lg:w-7/12">
-          <div className="flex flex-col items-center md:items-start justify-center">
-            <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
-              Academic Contributions
-            </h2>
-            <h1 className="text-4xl md:text-5xl font-bold">
-              My{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
-                Research Publications
-              </span>
-            </h1>
-            <p className="mt-6 text-center md:text-left text-white-100/90 max-w-2xl">
-              Contributing to the academic community through research on
-              Computer Vision, Machine Learning, and AI applications.
-            </p>
-          </div>
-        </div>
-
-        {/* Khoảng trống bên phải để trực thăng hiển thị */}
-        <div className="hidden md:block md:w-5/12 lg:w-5/12"></div>
+    <div className="w-full py-16" id="publications">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold">
+          My{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+            Research Publications
+          </span>
+        </h1>
+        <p className="mt-6 text-center text-white-100/90 max-w-3xl mx-auto">
+          Contributing to the academic community through research on Computer
+          Vision, Machine Learning, and AI applications.
+        </p>
       </div>
 
-      {/* Publications Container - Chỉnh để nằm bên trái */}
-      <div className="md:w-8/12 md:mr-auto">
-        <div className="grid md:grid-cols-1 gap-8">
+      <div className="w-full">
+        <div className="grid md:grid-cols-2 gap-8">
           {publications.map((publication) => (
             <PublicationCard
               key={publication.id}

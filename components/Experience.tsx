@@ -4,49 +4,25 @@ import { BsArrowRight } from "react-icons/bs";
 
 const Experience = () => {
   return (
-    <div className="py-12 w-full">
-      <div className="flex flex-col md:flex-row items-center mb-16">
-        <div className="md:w-7/12 lg:w-7/12">
-          <div className="flex flex-col items-center md:items-start justify-center">
-            <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
-              Career Path
-            </h2>
-            <h1 className="text-4xl md:text-5xl font-bold">
-              My{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
-                Experience
-              </span>
-            </h1>
-          </div>
-        </div>
-
-        <div className="hidden md:block md:w-5/12 lg:w-5/12"></div>
+    <div className="w-full py-20">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold">
+          Professional{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+            Experience
+          </span>
+        </h1>
       </div>
 
-      {/* Timeline Design */}
-      <div className="relative flex flex-col space-y-8 w-full max-w-4xl mx-auto md:mr-auto md:ml-0 md:pr-16">
-        {/* Vertical Line - Shifted to left */}
-        <div className="absolute top-0 left-8 md:left-1/4 h-full w-[2px] bg-gradient-to-b from-purple/80 via-white-100/20 to-transparent"></div>
-
+      <div className="w-full relative grid md:grid-cols-2 gap-8">
         {workExperience.map((job, index) => (
           <div
             key={job.id}
-            className={`flex flex-col md:flex-row relative items-center md:items-start ${
-              index % 2 === 0 ? "md:flex-row" : "md:flex-row"
-            }`}
+            className="w-full relative bg-gradient-to-br from-black-200/60 to-black-100/95 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:shadow-purple/10 hover:border-purple/20 transition-all duration-300"
           >
-            {/* Marker/Dot */}
-            <div
-              className={`absolute z-10 left-8 md:left-1/4 w-6 h-6 rounded-full bg-purple shadow-lg shadow-purple/30 transform -translate-x-1/2`}
-            ></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple/5 rounded-full filter blur-3xl -mr-10 -mt-10 z-0"></div>
 
-            {/* Content - All items on the left side of timeline */}
-            <div
-              className={`relative bg-gradient-to-br from-black-200/60 to-black-100/95 backdrop-blur-md border border-white/10 rounded-xl p-6 md:max-w-xl w-full ml-16 md:ml-0 md:mr-auto
-               ${
-                 index % 2 === 0 ? "md:mr-auto md:ml-0" : "md:mr-auto md:ml-0"
-               }`}
-            >
+            <div className="relative z-10">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <img
