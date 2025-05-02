@@ -33,7 +33,7 @@ const Hero = () => {
             words="LE HUY HOANG"
           />
 
-          <p className="mb-4 sm:mb-6 text-sm sm:text-base md:text-lg max-w-2xl text-white leading-relaxed p-2 sm:p-3 rounded-lg">
+          <p className="mb-4 sm:mb-6 text-sm sm:text-base md:text-lg max-w-2xl text-black leading-relaxed p-2 sm:p-3 rounded-lg">
             I am a passionate backend developer with expertise in .NET Core, C#,
             SQL Server, and Entity Framework. I have experience in designing and
             optimizing RESTful APIs, microservices architecture, and database
@@ -52,7 +52,7 @@ const Hero = () => {
             ].map((skill) => (
               <span
                 key={skill.name}
-                className="flex items-center gap-1 sm:gap-2 bg-white/10 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-white text-xs sm:text-sm"
+                className="flex items-center gap-1 sm:gap-2 bg-white/10 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-black text-xs sm:text-sm"
               >
                 {skill.icon}
                 <span className="hidden xs:inline">{skill.name}</span>
@@ -62,18 +62,18 @@ const Hero = () => {
 
           {/* Key Projects Section */}
           <div className="mb-4 sm:mb-6 p-2 sm:p-3 rounded-lg border border-white/20 max-w-2xl w-full">
-            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2">
+            <h3 className="text-base sm:text-lg font-semibold text-black mb-1 sm:mb-2">
               Featured Projects
             </h3>
-            <ul className="list-disc list-inside text-white space-y-1 text-xs sm:text-sm md:text-base">
-              <li className="line-clamp-1 sm:line-clamp-none">
+            <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm md:text-base">
+              <li className="line-clamp-1 sm:line-clamp-none text-black">
                 Sports Schedule Booking Web Application (Next.js, SignalR,
                 MySQL,...)
               </li>
-              <li className="line-clamp-1 sm:line-clamp-none">
+              <li className="line-clamp-1 sm:line-clamp-none text-black">
                 Room Management System (WPF, .NET, SQL Server,...)
               </li>
-              <li className="line-clamp-1 sm:line-clamp-none">
+              <li className="line-clamp-1 sm:line-clamp-none text-black">
                 AI Assistant - AI Chatbot with RAG (Python, FastAPI,
                 MongoDB,...)
               </li>

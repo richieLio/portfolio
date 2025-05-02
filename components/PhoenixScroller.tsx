@@ -1,15 +1,37 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
+import {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  createContext,
+  useContext,
+} from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense } from "react";
 import {
   PerspectiveCamera,
   Environment,
   Cloud,
   Sparkles,
+  CameraShake,
 } from "@react-three/drei";
 import PhoenixModel from "./PhoenixModel";
+import * as THREE from "three";
+import { random } from "maath";
+
+// Import type from drei for the ShakeController
+type ShakeController = {
+  getIntensity: () => number;
+  setIntensity: (intensity: number) => void;
+};
+
+// Lightning context type definition
+type ShakeContextType = React.RefObject<ShakeController> | null;
+
+// Create context with proper typing
+const LightningContext = createContext<ShakeContextType>(null);
 
 // CloudLayer component props type
 interface CloudLayerProps {
@@ -19,6 +41,67 @@ interface CloudLayerProps {
   cloudIndex: number;
   maxScrollY: number;
 }
+
+// Lightning component props
+interface LightningProps {
+  position?: [number, number, number];
+  color?: string;
+}
+
+// Lightning component that creates the flash effect
+const Lightning = ({
+  position = [0, 0, 0],
+  color = "rgb(155, 220, 255)",
+}: LightningProps) => {
+  const light = useRef<THREE.PointLight>(null);
+  const shake = useContext(LightningContext);
+  const [flash] = useState(
+    () =>
+      new random.FlashGen({
+        count: 6,
+        minDuration: 40,
+        maxDuration: 200,
+      })
+  );
+
+  // Create a random timing for lightning strikes
+  const [nextFlash, setNextFlash] = useState(Math.random() * 8 + 5);
+  const [timer, setTimer] = useState(0);
+
+  useFrame((state, delta) => {
+    // Update timer and check if it's time for a new lightning flash
+    setTimer((prev) => prev + delta);
+
+    if (timer > nextFlash) {
+      flash.burst(); // Trigger a flash
+      setNextFlash(Math.random() * 8 + 5); // Set next flash time (5-13 seconds)
+      setTimer(0); // Reset timer
+    }
+
+    // Update flash intensity
+    const impulse = flash.update(state.clock.elapsedTime, delta);
+    if (light.current) {
+      light.current.intensity = impulse * 25000;
+    }
+
+    // Trigger camera shake when flash is at maximum
+    if (impulse === 1 && shake?.current) {
+      shake.current.setIntensity(0.8);
+    }
+  });
+
+  return (
+    <group position={new THREE.Vector3(...position)}>
+      <pointLight
+        ref={light}
+        color={color}
+        intensity={0}
+        distance={100}
+        decay={2}
+      />
+    </group>
+  );
+};
 
 // CloudLayer component to render a group of clouds
 const CloudLayer = ({
@@ -40,6 +123,9 @@ const CloudLayer = ({
   // This ensures clouds are distributed evenly throughout the entire page
   const calculatedY = yPosition - scrollProgress * 100 * scrollFactor;
 
+  // Add lightning to some of the clouds (every third cloud)
+  const hasLightning = cloudIndex % 3 === 0;
+
   return (
     <group position={[0, calculatedY, 0]}>
       {/* Center cloud */}
@@ -51,6 +137,7 @@ const CloudLayer = ({
         position={[0, 0, -5]}
         scale={1.3} // Slightly larger center cloud
       />
+      {hasLightning && <Lightning position={[0, 1, -5]} />}
 
       {/* Left side clouds - added more clouds with wider spread */}
       <Cloud
@@ -69,6 +156,9 @@ const CloudLayer = ({
         position={[-15, 0, -8]}
         scale={1.4}
       />
+      {cloudIndex % 4 === 1 && (
+        <Lightning position={[-12, 2, -9]} color="rgb(170, 230, 255)" />
+      )}
       <Cloud
         opacity={0.35}
         speed={0.25}
@@ -87,6 +177,7 @@ const CloudLayer = ({
         position={[8, -1, -8]}
         scale={1.2}
       />
+      {cloudIndex % 4 === 2 && <Lightning position={[10, 0, -8]} />}
       <Cloud
         opacity={0.4}
         speed={0.2}
@@ -131,6 +222,9 @@ const CloudLayer = ({
             position={[0, -1, -8]}
             scale={1.3}
           />
+          {cloudIndex % 4 === 3 && (
+            <Lightning position={[0, 0, -8]} color="rgb(200, 240, 255)" />
+          )}
         </>
       )}
     </group>
@@ -146,6 +240,8 @@ export default function PhoenixScroller() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentSection, setCurrentSection] = useState("banner");
   const [maxScrollY, setMaxScrollY] = useState(0);
+  // Camera shake reference for lightning effect
+  const shakeRef = useRef<ShakeController>(null);
 
   // Define the cloud layers - optimized for performance
   const cloudLayers = useMemo(() => {
@@ -251,45 +347,63 @@ export default function PhoenixScroller() {
           dpr={[1, 1.5]}
         >
           <Suspense fallback={null}>
-            {/* Camera setup */}
-            <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
-
-            {/* Lighting */}
-            <ambientLight intensity={1.3} />
-            <directionalLight position={[500, 500, 500]} intensity={1.0} />
-            <directionalLight
-              position={[-500, -500, -500]}
-              intensity={0.2}
-              color="#e1e5f2"
-            />
-
-            {/* Multiple layers of clouds - only render visible layers */}
-            {visibleLayerIndices.map((index) => (
-              <CloudLayer
-                key={`cloud-layer-${index}`}
-                yPosition={cloudLayers[index].yPosition}
-                seed={cloudLayers[index].seed}
-                scrollY={scrollY}
-                cloudIndex={index}
-                maxScrollY={maxScrollY}
+            <LightningContext.Provider value={shakeRef}>
+              {/* Camera setup with shake effect for lightning */}
+              <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
+              <CameraShake
+                ref={shakeRef}
+                maxYaw={0.03}
+                maxPitch={0.01}
+                maxRoll={0.01}
+                yawFrequency={3}
+                pitchFrequency={2}
+                rollFrequency={1.5}
+                decay
+                decayRate={0.95}
+                intensity={0}
               />
-            ))}
 
-            {/* Optimized Sparkles with fewer particles */}
-            <Sparkles
-              count={50}
-              scale={10}
-              size={2}
-              speed={0.3}
-              opacity={0.2}
-              color="white"
-            />
+              {/* Lighting */}
+              <ambientLight intensity={1.3} />
+              <directionalLight position={[500, 500, 500]} intensity={1.0} />
+              <directionalLight
+                position={[-500, -500, -500]}
+                intensity={0.2}
+                color="#e1e5f2"
+              />
 
-            {/* The Helicopter model */}
-            <PhoenixModel scrollY={scrollY} currentSection={currentSection} />
+              {/* Multiple layers of clouds - only render visible layers */}
+              {visibleLayerIndices.map((index) => (
+                <CloudLayer
+                  key={`cloud-layer-${index}`}
+                  yPosition={cloudLayers[index].yPosition}
+                  seed={cloudLayers[index].seed}
+                  scrollY={scrollY}
+                  cloudIndex={index}
+                  maxScrollY={maxScrollY}
+                />
+              ))}
 
-            {/* Sky Environment */}
-            <Environment preset="dawn" />
+              {/* Add an ambient lightning effect for occasional distant flashes */}
+              <Lightning position={[-30, 20, -25]} color="rgb(190, 230, 255)" />
+              <Lightning position={[40, 15, -30]} color="rgb(170, 210, 255)" />
+
+              {/* Optimized Sparkles with fewer particles */}
+              <Sparkles
+                count={50}
+                scale={10}
+                size={2}
+                speed={0.3}
+                opacity={0.2}
+                color="white"
+              />
+
+              {/* The Helicopter model */}
+              <PhoenixModel scrollY={scrollY} currentSection={currentSection} />
+
+              {/* Sky Environment */}
+              <Environment preset="dawn" />
+            </LightningContext.Provider>
           </Suspense>
         </Canvas>
       )}
