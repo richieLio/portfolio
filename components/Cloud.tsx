@@ -16,12 +16,13 @@ interface CloudProps {
 // SectionCloud component for specific section decoration
 const SectionCloud = ({
   section,
-  density = 3,
+  density = 2,
   color = "white",
-  speed = 0.4,
-  height = 100,
+  speed = 0.3,
+  height = 80,
 }: CloudProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isComputing, setIsComputing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,13 +30,22 @@ const SectionCloud = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            setTimeout(() => setIsVisible(true), 50);
+            setIsComputing(true);
           } else {
-            setIsVisible(false);
+            setIsComputing(false);
+            setTimeout(() => {
+              if (!entry.isIntersecting) {
+                setIsVisible(false);
+              }
+            }, 300);
           }
         });
       },
-      { threshold: 0.2 }
+      {
+        threshold: 0.1,
+        rootMargin: "100px",
+      }
     );
 
     if (containerRef.current) {
@@ -49,45 +59,64 @@ const SectionCloud = ({
     };
   }, []);
 
-  // Memoize cloud configuration to prevent recalculation on each render
   const config = useMemo(() => {
     switch (section) {
       case "intro":
         return {
           positions: [
-            { pos: [-4, 1, -6], scale: 1.3, opacity: 0.6, speed: 0.4 },
-            { pos: [5, -1, -8], scale: 1.1, opacity: 0.4, speed: 0.3 },
+            {
+              pos: [-4, 1, -6],
+              scale: 1.3,
+              opacity: 0.5,
+              speed: 0.3,
+              segments: 10,
+            },
           ],
-          sparkles: { count: 40, scale: 6, size: 1.8 },
+          sparkles: { count: 25, scale: 5, size: 1.8 },
         };
       case "description":
         return {
           positions: [
-            { pos: [0, 1, -7], scale: 1.2, opacity: 0.5, speed: 0.3 },
-            { pos: [-6, -1, -9], scale: 1.0, opacity: 0.4, speed: 0.25 },
+            {
+              pos: [0, 1, -7],
+              scale: 1.2,
+              opacity: 0.4,
+              speed: 0.2,
+              segments: 8,
+            },
           ],
-          sparkles: { count: 35, scale: 5, size: 1.5 },
+          sparkles: { count: 20, scale: 4, size: 1.5 },
         };
       case "skills":
         return {
           positions: [
-            { pos: [3, 0, -6], scale: 1.4, opacity: 0.6, speed: 0.35 },
-            { pos: [-5, 1, -8], scale: 1.2, opacity: 0.5, speed: 0.3 },
+            {
+              pos: [3, 0, -6],
+              scale: 1.3,
+              opacity: 0.5,
+              speed: 0.25,
+              segments: 10,
+            },
           ],
-          sparkles: { count: 45, scale: 6, size: 1.7 },
+          sparkles: { count: 25, scale: 5, size: 1.7 },
         };
 
       default:
         return {
           positions: [
-            { pos: [0, 0, -6], scale: 1.2, opacity: 0.5, speed: 0.3 },
+            {
+              pos: [0, 0, -6],
+              scale: 1.1,
+              opacity: 0.4,
+              speed: 0.2,
+              segments: 8,
+            },
           ],
-          sparkles: { count: 30, scale: 4, size: 1.5 },
+          sparkles: { count: 15, scale: 3, size: 1.5 },
         };
     }
   }, [section]);
 
-  // Memoize the style object to prevent recreation on each render
   const containerStyle = useMemo(
     () => ({
       height: `${height}%`,
@@ -97,29 +126,35 @@ const SectionCloud = ({
     [height, isVisible]
   );
 
-  // Only render the Canvas when visible
   return (
     <div
       ref={containerRef}
       className="absolute inset-0 pointer-events-none z-5"
       style={containerStyle}
     >
-      {isVisible && (
+      {isVisible && isComputing && (
         <Canvas
           style={{ background: "transparent" }}
-          gl={{ alpha: true, antialias: true }}
-          dpr={[1, 2]} // Limit pixel ratio for better performance
-          performance={{ min: 0.5 }} // Allow performance scaling
+          gl={{
+            alpha: true,
+            antialias: false,
+            powerPreference: "high-performance",
+            stencil: false,
+            depth: true,
+          }}
+          dpr={[0.7, 1.0]}
+          performance={{ min: 0.4 }}
+          frameloop={isComputing ? "demand" : "never"}
         >
-          <ambientLight intensity={1.3} />
-          <directionalLight position={[5, 5, 5]} intensity={1.0} />
+          <ambientLight intensity={1.0} />
+          <directionalLight position={[5, 5, 5]} intensity={0.8} />
 
           {config.positions.map((cloud, index) => (
             <DreiCloud
               key={`${section}-cloud-${index}`}
               opacity={cloud.opacity}
               speed={cloud.speed}
-              segments={12}
+              segments={cloud.segments}
               position={new THREE.Vector3(...cloud.pos)}
               color={color}
               scale={cloud.scale}
@@ -130,8 +165,8 @@ const SectionCloud = ({
             count={config.sparkles.count}
             scale={config.sparkles.scale}
             size={config.sparkles.size}
-            speed={0.3}
-            opacity={0.2}
+            speed={0.2}
+            opacity={0.15}
             color={color}
           />
 
