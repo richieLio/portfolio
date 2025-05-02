@@ -5,6 +5,7 @@ import { certifications } from "@/data";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaAward } from "react-icons/fa";
 import Image from "next/image";
+import { Cloud } from "@react-three/drei";
 
 const Certifications = () => {
   const containerVariants = {
