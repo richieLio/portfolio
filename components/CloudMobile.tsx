@@ -52,51 +52,51 @@ const CloudMobile = ({
     switch (section) {
       case "banner":
         return {
-          cloudCount: 3,
+          cloudCount: 2,
           backgroundColor: "rgba(0, 0, 0, 0.15)",
-          sparkleCount: 12,
+          sparkleCount: 6,
         };
       case "intro":
         return {
-          cloudCount: 2,
+          cloudCount: 1,
           backgroundColor: "rgba(0, 0, 0, 0.1)",
-          sparkleCount: 10,
+          sparkleCount: 5,
         };
       case "description":
         return {
-          cloudCount: 2,
+          cloudCount: 1,
           backgroundColor: "rgba(0, 0, 0, 0.08)",
-          sparkleCount: 8,
+          sparkleCount: 4,
         };
       case "skills":
         return {
-          cloudCount: 3,
+          cloudCount: 2,
           backgroundColor: "rgba(0, 0, 0, 0.12)",
-          sparkleCount: 10,
+          sparkleCount: 5,
         };
       case "publications":
         return {
-          cloudCount: 2,
+          cloudCount: 1,
           backgroundColor: "rgba(0, 0, 0, 0.1)",
-          sparkleCount: 9,
+          sparkleCount: 4,
         };
       case "certifications":
         return {
-          cloudCount: 2,
+          cloudCount: 1,
           backgroundColor: "rgba(0, 0, 0, 0.1)",
-          sparkleCount: 8,
+          sparkleCount: 4,
         };
       case "contact":
         return {
-          cloudCount: 3,
+          cloudCount: 2,
           backgroundColor: "rgba(0, 0, 0, 0.15)",
-          sparkleCount: 10,
+          sparkleCount: 5,
         };
       default:
         return {
-          cloudCount: 2,
+          cloudCount: 1,
           backgroundColor: "rgba(0, 0, 0, 0.1)",
-          sparkleCount: 8,
+          sparkleCount: 4,
         };
     }
   };
@@ -110,9 +110,9 @@ const CloudMobile = ({
       const left = 10 + (i * 80) / config.cloudCount;
 
       // Vary sizes and animation speeds
-      const size = 50 + Math.random() * 30;
-      const duration = 20 + Math.random() * 10;
-      const delay = Math.random() * 5;
+      const size = 45 + Math.random() * 20;
+      const duration = 25 + Math.random() * 5;
+      const delay = Math.random() * 3;
 
       // Vary vertical position
       const top = 20 + Math.random() * 60;
@@ -126,9 +126,9 @@ const CloudMobile = ({
     return Array.from({ length: config.sparkleCount }, (_, i) => {
       const left = Math.random() * 100;
       const top = Math.random() * 100;
-      const size = 2 + Math.random() * 3;
-      const duration = 1 + Math.random() * 2;
-      const delay = Math.random() * 3;
+      const size = 2 + Math.random() * 2;
+      const duration = 1.5 + Math.random() * 1;
+      const delay = Math.random() * 2;
 
       return { left, top, size, duration, delay };
     });
@@ -158,17 +158,18 @@ const CloudMobile = ({
           {clouds.map((cloud, index) => (
             <motion.div
               key={`cloud-${section}-${index}`}
-              className="absolute rounded-full opacity-60 filter blur-xl"
+              className="absolute rounded-full opacity-50"
               style={{
                 backgroundColor: color,
                 width: `${cloud.size}px`,
                 height: `${cloud.size * 0.6}px`,
                 left: `${cloud.left}%`,
                 top: `${cloud.top}%`,
+                filter: "blur(8px)",
               }}
               animate={{
-                x: [0, 10, -10, 0],
-                y: [0, 5, -5, 0],
+                x: [0, 5, -5, 0],
+                y: [0, 3, -3, 0],
               }}
               transition={{
                 duration: cloud.duration,

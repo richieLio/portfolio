@@ -3,6 +3,19 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
+// Add TypeScript interfaces for Navigator extensions
+interface NavigatorWithMemory extends Navigator {
+  deviceMemory?: number;
+}
+
+interface NavigatorConnection {
+  saveData?: boolean;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NavigatorConnection;
+}
+
 // Import components with SSR disabled
 const SectionClouds = dynamic(() => import("@/components/SectionClouds"), {
   ssr: false,
@@ -45,15 +58,34 @@ const ResponsiveClouds = ({
           navigator.userAgent
         );
 
-      // Check if screen is narrow
-      const isNarrowScreen = window.innerWidth < 768;
+      // Check if screen is narrow - increased threshold to 1024px from 768px
+      const isNarrowScreen = window.innerWidth < 1024;
 
-      // Check for low-end devices (simplified check)
+      // Check for low-end devices - increased threshold to 6 cores from 4
       const isLowEndDevice = navigator.hardwareConcurrency
-        ? navigator.hardwareConcurrency <= 4
-        : false;
+        ? navigator.hardwareConcurrency <= 6
+        : true; // Default to true if we can't detect
 
-      return isMobileDevice || isNarrowScreen || isLowEndDevice;
+      // Check for low memory (if available through performance API)
+      const navigatorWithMemory = navigator as NavigatorWithMemory;
+      const hasLowMemory = !!(
+        navigatorWithMemory.deviceMemory && navigatorWithMemory.deviceMemory < 8
+      );
+
+      // Check if device is in battery saving mode (if available)
+      const navigatorWithConnection = navigator as NavigatorWithConnection;
+      const connectionObj = navigatorWithConnection.connection;
+      const isBatterySaving = !!(
+        connectionObj && connectionObj.saveData === true
+      );
+
+      return (
+        isMobileDevice ||
+        isNarrowScreen ||
+        isLowEndDevice ||
+        hasLowMemory ||
+        isBatterySaving
+      );
     };
 
     setUseMobile(shouldUseMobile());

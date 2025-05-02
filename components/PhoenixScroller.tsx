@@ -129,36 +129,39 @@ const CloudLayer = ({
 
   return (
     <group position={[0, calculatedY, 0]}>
-      {/* Center cloud */}
+      {/* Center cloud - với kích thước lớn hơn */}
       <Cloud
-        opacity={0.5}
+        opacity={0.6}
         speed={0.3}
         seed={seed}
-        segments={12}
+        segments={6}
         position={[0, 0, -5]}
-        scale={1.3}
+        scale={1.8}
+        color="#ffffff"
       />
       {hasLightning && <Lightning position={[0, 1, -5]} />}
 
-      {/* Left side clouds - simplified layout with fewer clouds */}
+      {/* Left side clouds - với kích thước lớn hơn */}
       <Cloud
-        opacity={0.3}
+        opacity={0.55}
         speed={0.2}
         seed={seed + 1}
-        segments={10}
+        segments={5}
         position={[-8, 1, -10]}
-        scale={1.2}
+        scale={1.7}
+        color="#ffffff"
       />
 
       {/* Only render far left clouds for early layers to improve performance */}
-      {cloudIndex < 5 && (
+      {cloudIndex < 3 && (
         <Cloud
-          opacity={0.4}
+          opacity={0.5}
           speed={0.2}
           seed={seed + 10}
-          segments={10}
+          segments={5}
           position={[-15, 0, -8]}
-          scale={1.4}
+          scale={2.0}
+          color="#ffffff"
         />
       )}
 
@@ -167,69 +170,86 @@ const CloudLayer = ({
       )}
 
       {/* Only render the far clouds for early layers */}
-      {cloudIndex < 4 && (
+      {cloudIndex < 2 && (
         <Cloud
-          opacity={0.35}
+          opacity={0.45}
           speed={0.2}
           seed={seed + 15}
-          segments={8}
+          segments={4}
           position={[-20, -1, -12]}
-          scale={1.3}
+          scale={1.9}
+          color="#ffffff"
         />
       )}
 
-      {/* Right side clouds - simplified */}
+      {/* Right side clouds - with bigger size */}
       <Cloud
-        opacity={0.4}
+        opacity={0.55}
         speed={0.15}
         seed={seed + 2}
-        segments={10}
+        segments={5}
         position={[8, -1, -8]}
-        scale={1.2}
+        scale={1.7}
+        color="#ffffff"
       />
       {cloudIndex % 4 === 2 && <Lightning position={[10, 0, -8]} />}
 
       {/* Only render far right clouds for early layers */}
-      {cloudIndex < 5 && (
-        <Cloud
-          opacity={0.4}
-          speed={0.15}
-          seed={seed + 3}
-          segments={10}
-          position={[15, 0, -10]}
-          scale={1.3}
-        />
-      )}
-
       {cloudIndex < 3 && (
         <Cloud
-          opacity={0.35}
-          speed={0.2}
-          seed={seed + 12}
-          segments={8}
-          position={[20, -1, -12]}
-          scale={1.1}
+          opacity={0.5}
+          speed={0.15}
+          seed={seed + 3}
+          segments={5}
+          position={[15, 0, -10]}
+          scale={1.8}
+          color="#ffffff"
         />
       )}
 
-      {/* Additional clouds for denser layers (for first 4 layers only instead of 8) */}
-      {cloudIndex < 4 && (
+      {cloudIndex < 2 && (
+        <Cloud
+          opacity={0.45}
+          speed={0.2}
+          seed={seed + 12}
+          segments={4}
+          position={[20, -1, -12]}
+          scale={1.6}
+          color="#ffffff"
+        />
+      )}
+
+      {/* Thêm một số đám mây lớn cho tất cả các lớp với opacity thấp */}
+      <Cloud
+        opacity={0.4}
+        speed={0.1}
+        seed={seed + 20}
+        segments={4}
+        position={[0, -3, -15]}
+        scale={3.0}
+        color="#ffffff"
+      />
+
+      {/* Additional clouds for denser layers - with increased size */}
+      {cloudIndex < 2 && (
         <>
           <Cloud
-            opacity={0.4}
+            opacity={0.5}
             speed={0.15}
             seed={seed + 4}
-            segments={10}
+            segments={5}
             position={[-12, -1, -9]}
-            scale={1.2}
+            scale={1.7}
+            color="#ffffff"
           />
           <Cloud
-            opacity={0.3}
+            opacity={0.4}
             speed={0.1}
             seed={seed + 5}
-            segments={8}
+            segments={4}
             position={[12, 1, -11]}
-            scale={1.1}
+            scale={1.6}
+            color="#ffffff"
           />
           {cloudIndex % 4 === 3 && (
             <Lightning position={[0, 0, -8]} color="rgb(200, 240, 255)" />
@@ -252,14 +272,13 @@ export default function PhoenixScroller() {
   // Camera shake reference for lightning effect
   const shakeRef = useRef<ShakeController>(null);
 
-  // Define the cloud layers - optimized for performance
+  // Define the cloud layers - optimized for performance but distributed better
   const cloudLayers = useMemo(() => {
-    // Reduced from 10 to 7 layers for better performance
-    return Array.from({ length: 7 }, (_, index) => ({
-      // Start with the first cloud at y=10 (visible at top of page)
-      // and spread evenly throughout full scroll range with increased spacing
-      yPosition: 10 - index * 10,
-      seed: index * 10 + 1,
+    // Giữ số lượng 5 lớp nhưng phân bố tốt hơn
+    return Array.from({ length: 5 }, (_, index) => ({
+      // Phân bố đám mây đều hơn trong không gian
+      yPosition: 10 - index * 15, // Tăng khoảng cách từ 12 lên 15 để tạo không gian lớn hơn
+      seed: index * 15 + 1, // Thay đổi seed để đảm bảo các lớp khác nhau
     }));
   }, []);
 
@@ -272,7 +291,7 @@ export default function PhoenixScroller() {
       0,
       Math.floor(scrollPercent * cloudLayers.length) - 1
     );
-    const endIndex = Math.min(cloudLayers.length - 1, startIndex + 3);
+    const endIndex = Math.min(cloudLayers.length - 1, startIndex + 2); // Reduced from +3 to +2
 
     return Array.from(
       { length: endIndex - startIndex + 1 },
@@ -372,8 +391,8 @@ export default function PhoenixScroller() {
             stencil: false,
             depth: true,
           }}
-          dpr={[0.8, 1.2]}
-          performance={{ min: 0.5 }}
+          dpr={[0.6, 1.0]} // Giữ DPR thấp
+          performance={{ min: 0.4 }}
         >
           <Suspense fallback={null}>
             <LightningContext.Provider value={shakeRef}>
@@ -391,16 +410,18 @@ export default function PhoenixScroller() {
                 decayRate={0.96}
                 intensity={0}
               />
-
               {/* Lighting - reduced intensity */}
-              <ambientLight intensity={1.0} />
-              <directionalLight position={[500, 500, 500]} intensity={0.8} />
+              <ambientLight intensity={0.9} />
+              <directionalLight
+                position={[500, 500, 500]}
+                intensity={0.8}
+                color="#ffffff"
+              />
               <directionalLight
                 position={[-500, -500, -500]}
-                intensity={0.1}
-                color="#e1e5f2"
+                intensity={0.15}
+                color="#ffffff"
               />
-
               {/* Multiple layers of clouds - only render visible layers */}
               {visibleLayerIndices.map((index) => (
                 <CloudLayer
@@ -412,23 +433,19 @@ export default function PhoenixScroller() {
                   maxScrollY={maxScrollY}
                 />
               ))}
-
-              {/* Add an ambient lightning effect for occasional distant flashes - reduced to just one */}
+              {/* Add an ambient lightning effect for occasional distant flashes */}
               <Lightning position={[-30, 20, -25]} color="rgb(190, 230, 255)" />
-
-              {/* Optimized Sparkles with fewer particles */}
+              {/* Optimized Sparkles with fewer particles but larger size */}
               <Sparkles
-                count={30}
-                scale={8}
-                size={2}
+                count={15} // Giảm số lượng từ 20 xuống 15
+                scale={10} // Tăng từ 8 lên 10
+                size={2.5} // Tăng từ 2 lên 2.5
                 speed={0.2}
-                opacity={0.15}
+                opacity={0.15} // Tăng lại từ 0.12 lên 0.15
                 color="white"
               />
-
               {/* The Helicopter model */}
               <PhoenixModel scrollY={scrollY} currentSection={currentSection} />
-
               {/* Sky Environment with lower quality */}
               <Environment preset="dawn" />
             </LightningContext.Provider>
