@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Cloud as DreiCloud, Environment, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
@@ -49,8 +49,8 @@ const SectionCloud = ({
     };
   }, []);
 
-  // Derive clouds configuration based on section
-  const getCloudsConfig = () => {
+  // Memoize cloud configuration to prevent recalculation on each render
+  const config = useMemo(() => {
     switch (section) {
       case "intro":
         return {
@@ -85,24 +85,31 @@ const SectionCloud = ({
           sparkles: { count: 30, scale: 4, size: 1.5 },
         };
     }
-  };
+  }, [section]);
 
-  const config = getCloudsConfig();
+  // Memoize the style object to prevent recreation on each render
+  const containerStyle = useMemo(
+    () => ({
+      height: `${height}%`,
+      opacity: isVisible ? 1 : 0,
+      transition: "opacity 0.5s ease-in-out",
+    }),
+    [height, isVisible]
+  );
 
+  // Only render the Canvas when visible
   return (
     <div
       ref={containerRef}
       className="absolute inset-0 pointer-events-none z-5"
-      style={{
-        height: `${height}%`,
-        opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.5s ease-in-out",
-      }}
+      style={containerStyle}
     >
       {isVisible && (
         <Canvas
           style={{ background: "transparent" }}
           gl={{ alpha: true, antialias: true }}
+          dpr={[1, 2]} // Limit pixel ratio for better performance
+          performance={{ min: 0.5 }} // Allow performance scaling
         >
           <ambientLight intensity={1.3} />
           <directionalLight position={[5, 5, 5]} intensity={1.0} />
