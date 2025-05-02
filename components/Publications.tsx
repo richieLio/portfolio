@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { publications } from "@/data";
 import { motion } from "framer-motion";
-import { FaExternalLinkAlt, FaBookOpen, FaUniversity } from "react-icons/fa";
+import { FaExternalLinkAlt, FaBookOpen } from "react-icons/fa";
+import Image from "next/image";
 
 // Define the Publication type
 interface Publication {
@@ -18,96 +19,57 @@ interface Publication {
 
 const PublicationCard = ({
   publication,
-  isFeatured = false,
+  variants,
+  index,
 }: {
   publication: Publication;
-  isFeatured?: boolean;
+  variants: any;
+  index: number;
 }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      whileHover={{ y: -5 }}
-      className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-black-200/60 to-black-100/95 backdrop-blur-md border border-white/10 ${
-        isFeatured ? "p-8" : "p-6"
-      } hover:shadow-purple/10 hover:border-purple/30 transition-all duration-300`}
+      variants={variants}
+      custom={index}
+      whileHover={{ y: -5, scale: 1.02 }}
+      className="relative overflow-hidden bg-black-200/20 backdrop-blur-md p-6 transition-all duration-300"
     >
-      <div className="absolute top-0 right-0 w-40 h-40 bg-purple/5 rounded-full filter blur-3xl -mr-10 -mt-10 z-0"></div>
-
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
-          <div
-            className={`${
-              isFeatured ? "w-12 h-12 rounded-xl" : "w-8 h-8 rounded-full mt-1"
-            } bg-purple/10 flex items-center justify-center flex-shrink-0`}
-          >
-            <FaBookOpen className="text-purple" size={isFeatured ? 24 : 14} />
+          <div className="w-10 h-10 bg-purple/10 flex items-center justify-center flex-shrink-0">
+            <FaBookOpen className="text-purple" size={20} />
           </div>
-          <h3
-            className={`${
-              isFeatured ? "text-2xl" : "text-lg"
-            } font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple`}
-          >
-            {publication.title}
-          </h3>
+          <h3 className="text-xl font-bold text-white">{publication.title}</h3>
         </div>
 
         {/* Content */}
-        <div className={`${isFeatured ? "" : "pl-11"} space-y-3`}>
+        <div className="space-y-3">
           <div className="space-y-2">
             <div className="flex items-start">
-              <span
-                className={`text-white-100/60 ${isFeatured ? "w-24" : "w-20"} ${
-                  isFeatured ? "text-base" : "text-sm"
-                } flex-shrink-0`}
-              >
+              <span className="text-white w-20 text-sm flex-shrink-0">
                 Authors:
               </span>
-              <span
-                className={`text-white ${
-                  isFeatured ? "font-medium" : "text-sm"
-                }`}
-              >
-                {publication.authors}
-              </span>
+              <span className="text-white text-sm">{publication.authors}</span>
             </div>
             <div className="flex items-start">
-              <span
-                className={`text-white-100/60 ${isFeatured ? "w-24" : "w-20"} ${
-                  isFeatured ? "text-base" : "text-sm"
-                } flex-shrink-0`}
-              >
+              <span className="text-white w-20 text-sm flex-shrink-0">
                 Venue:
               </span>
-              <span className={`text-white ${isFeatured ? "" : "text-sm"}`}>
-                {publication.venue}
-              </span>
+              <span className="text-white text-sm">{publication.venue}</span>
             </div>
             <div className="flex items-start">
-              <span
-                className={`text-white-100/60 ${isFeatured ? "w-24" : "w-20"} ${
-                  isFeatured ? "text-base" : "text-sm"
-                } flex-shrink-0`}
-              >
+              <span className="text-white w-20 text-sm flex-shrink-0">
                 Published:
               </span>
-              <span className={`text-white ${isFeatured ? "" : "text-sm"}`}>
-                {publication.year}
-              </span>
+              <span className="text-white text-sm">{publication.year}</span>
             </div>
             <div className="flex items-start">
-              <span
-                className={`text-white-100/60 ${isFeatured ? "w-24" : "w-20"} ${
-                  isFeatured ? "text-base" : "text-sm"
-                } flex-shrink-0`}
-              >
+              <span className="text-white w-20 text-sm flex-shrink-0">
                 Available:
               </span>
-              <span className={`text-white ${isFeatured ? "" : "text-sm"}`}>
+              <span className="text-white text-sm">
                 {publication.available}
               </span>
             </div>
@@ -115,18 +77,10 @@ const PublicationCard = ({
 
           {/* Abstract */}
           <div className="mt-3 pt-3 border-t border-white/5">
-            <h4
-              className={`${
-                isFeatured ? "text-lg" : "text-sm"
-              } font-medium mb-2`}
-            >
-              Abstract:
-            </h4>
+            <h4 className="text-sm font-medium mb-2 text-white">Abstract:</h4>
             <p
-              className={`text-white-100/${isFeatured ? "90" : "80"} ${
-                isFeatured ? "text-base" : "text-sm"
-              } leading-relaxed ${
-                !isFeatured && !expanded ? "line-clamp-4" : ""
+              className={`text-white text-sm leading-relaxed ${
+                !expanded ? "line-clamp-3" : ""
               }`}
             >
               {publication.id === 1 ? (
@@ -162,14 +116,12 @@ const PublicationCard = ({
                 </>
               )}
             </p>
-            {!isFeatured && (
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className="text-sm text-purple mt-2 hover:underline"
-              >
-                {expanded ? "Show less" : "Read more"}
-              </button>
-            )}
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="text-sm text-purple mt-2 hover:text-white transition-colors duration-300"
+            >
+              {expanded ? "Show less" : "Read more"}
+            </button>
           </div>
 
           {/* View Publication Button */}
@@ -179,7 +131,7 @@ const PublicationCard = ({
                 href={publication.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple/90 to-blue-100/70 rounded-full text-white hover:from-purple hover:to-blue-100 transition-all duration-300"
+                className="inline-flex items-center px-4 py-2 bg-purple/90 text-white hover:bg-purple transition-all duration-300"
               >
                 <span>View Publication</span>
                 <FaExternalLinkAlt className="ml-2" size={14} />
@@ -193,31 +145,68 @@ const PublicationCard = ({
 };
 
 const Publications = () => {
-  return (
-    <div className="w-full py-16" id="publications">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold">
-          My{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
-            Research Publications
-          </span>
-        </h1>
-        <p className="mt-6 text-center text-white-100/90 max-w-3xl mx-auto">
-          Contributing to the academic community through research on Computer
-          Vision, Machine Learning, and AI applications.
-        </p>
-      </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
-      <div className="w-full">
-        <div className="grid md:grid-cols-2 gap-8">
-          {publications.map((publication) => (
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+  };
+
+  return (
+    <div className="w-full pl-10 overflow-hidden" id="publications">
+      <div className="flex flex-col w-full mr-auto ml-0 pr-[25%]">
+        <motion.div
+          initial={{ x: -100 }}
+          whileInView={{ x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="pl-10 mb-8"
+        >
+          <h1 className="heading mb-3 text-white text-left text-4xl md:text-5xl font-bold">
+            My{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+              Research Publications
+            </span>
+          </h1>
+          <p className="mt-4 text-left text-white max-w-3xl">
+            Contributing to the academic community through research on Computer
+            Vision, Machine Learning, and AI applications.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="w-full grid md:grid-cols-2 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {publications.map((publication, index) => (
             <PublicationCard
               key={publication.id}
               publication={publication}
-              isFeatured={true}
+              variants={itemVariants}
+              index={index}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

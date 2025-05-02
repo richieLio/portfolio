@@ -20,13 +20,13 @@ const sectionPositions = [
   },
   {
     id: "intro",
-    position: { x: -4, y: -2, z: -2 },
+    position: { x: -6, y: -2, z: -2 },
     rotation: { x: 0.2, y: 0.8, z: -0.05 },
     entranceRotation: { x: 0, y: 0, z: Math.PI * 2 }, // Lộn vòng 360 độ theo trục z
   },
   {
     id: "description",
-    position: { x: 4, y: -2.5, z: -3 },
+    position: { x: 7, y: -2.5, z: -3 },
     rotation: { x: -0.1, y: -0.8, z: 0.1 },
     entranceRotation: { x: -Math.PI, y: 0, z: Math.PI }, // Lộn ngược nửa vòng theo trục x và z
   },
@@ -38,13 +38,13 @@ const sectionPositions = [
   },
   {
     id: "publications",
-    position: { x: 4, y: -2, z: -2 }, // Cột phải
+    position: { x: 6, y: -2, z: -2 }, // Cột phải
     rotation: { x: 0.1, y: -0.8, z: 0.05 },
     entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "certifications",
-    position: { x: -4, y: -1.5, z: -1 }, // Cột trái
+    position: { x: -5.5, y: -1.5, z: -1 }, // Cột trái
     rotation: { x: 0.2, y: 0.8, z: 0 },
     entranceRotation: { x: Math.PI, y: 0, z: -Math.PI }, // Lộn ngược và xoay ngược
   },

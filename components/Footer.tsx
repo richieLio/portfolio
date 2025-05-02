@@ -75,14 +75,6 @@ const Footer = () => {
 
   return (
     <footer className="relative pt-24 pb-10 overflow-hidden" id="contact">
-      {/* Background Effect */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <BackgroundGradientAnimation
-          containerClassName="h-full w-full"
-          className="opacity-40"
-        />
-      </div>
-
       {/* Footer Content */}
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         {/* Contact Section */}
@@ -92,9 +84,9 @@ const Footer = () => {
               <h2 className="text-sm uppercase tracking-[0.3em] text-blue-100 font-medium mb-4">
                 Let&apos;s Connect
               </h2>
-              <h1 className="text-3xl md:text-4xl font-bold mb-6">
+              <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white-100">
                 Ready to Bring Your{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-600">
                   Digital Vision
                 </span>{" "}
                 to Life?

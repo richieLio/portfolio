@@ -18,106 +18,68 @@ const PhoenixScroller = dynamic(() => import("@/components/PhoenixScroller"), {
 
 export default function Home() {
   return (
-    <main className="relative bg-sky-900 overflow-x-hidden">
+    <main className="relative bg-black-100 overflow-x-hidden">
       {/* Navigation - Higher z-index to stay above content */}
       <FloatingNav navItems={navItems} />
 
-      {/* 3. 3D Helicopter Model with 3D Clouds */}
+      {/* 3D Helicopter Model with 3D Clouds */}
       <div className="fixed inset-0 w-full h-full z-5">
         <PhoenixScroller />
       </div>
 
       {/* Content container - Glass effect panels over the clouds */}
       <div className="relative z-10 w-full">
-        {/* All sections get max-width to ensure readability and appear as floating panels */}
-        <div className="max-w-full mx-auto px-0 sm:px-0 lg:px-0">
+        {/* All sections get responsive container with appropriate padding */}
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section - Full Screen */}
           <section
             id="banner"
-            className="section min-h-screen w-full flex items-start justify-start scroll-mt-20 py-24 pl-0"
+            className="section min-h-screen w-full flex items-center justify-center sm:items-start sm:justify-start py-20 sm:py-24"
           >
             <Hero />
           </section>
 
           {/* Main Content Sections - All with enhanced glass-like effect */}
-          <div className="w-full space-y-32">
+          <div className="w-full">
             {/* Featured Projects Grid */}
-            <section
-              id="intro"
-              className="section w-full min-h-screen py-20 flex items-center justify-center scroll-mt-20"
-            >
-              <div
-                className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                              shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-              >
+            <section id="intro" className="section py-16 sm:py-20">
+              <div className="mb-10 sm:mb-20">
                 <RecentProjects />
               </div>
             </section>
 
             {/* Experience Timeline */}
-            <section
-              id="description"
-              className="section w-full min-h-screen py-20 flex items-center justify-center scroll-mt-20"
-            >
-              <div
-                className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                              shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-              >
+            <section id="description" className="section py-16 sm:py-20">
+              <div className="mb-10 sm:mb-20">
                 <Experience />
               </div>
             </section>
 
             {/* Skills Section */}
-            <section
-              id="skills"
-              className="section w-full min-h-screen py-20 flex items-center justify-center scroll-mt-20"
-            >
-              <div
-                className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                              shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-              >
+            <section id="skills" className="section py-16 sm:py-20">
+              <div className="mb-10 sm:mb-20">
                 <Skills />
               </div>
             </section>
 
             {/* Publications & Accomplishments */}
-            <section
-              id="publications"
-              className="section w-full min-h-screen py-20 flex items-center justify-center scroll-mt-20"
-            >
-              <div
-                className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                              shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-              >
+            <section id="publications" className="section py-16 sm:py-20">
+              <div className="mb-10 sm:mb-20">
                 <Publications />
               </div>
             </section>
 
             {/* Certifications Section */}
-            <section
-              id="certifications"
-              className="section w-full min-h-screen py-20 flex items-center justify-center scroll-mt-20"
-            >
-              <div
-                className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                              shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-              >
+            <section id="certifications" className="section py-16 sm:py-20">
+              <div className="mb-10 sm:mb-20">
                 <Certifications />
               </div>
             </section>
           </div>
 
           {/* Footer */}
-          <section
-            id="contact"
-            className="section w-full py-20 flex items-center justify-center scroll-mt-20 mb-10"
-          >
-            <div
-              className="w-full relative backdrop-blur-[2px] rounded-xl p-6 md:p-8 bg-white/10
-                            shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300"
-            >
-              <Footer />
-            </div>
+          <section id="contact" className="section py-16">
+            <Footer />
           </section>
         </div>
       </div>

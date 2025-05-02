@@ -8,78 +8,114 @@ import { motion } from "framer-motion";
 const Skills = () => {
   const [activeTab, setActiveTab] = useState("technical");
 
-  return (
-    <div className="w-full py-16" id="skills">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold">
-          My{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
-            Skills
-          </span>
-        </h1>
-      </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
-      <div className="flex justify-center mb-10">
-        <div className="bg-black-200/50 backdrop-blur-md p-1 rounded-full">
-          <button
-            onClick={() => setActiveTab("technical")}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+  };
+
+  return (
+    <div className="w-full px-4 sm:px-6 md:pr-10 overflow-hidden" id="skills">
+      <div className="flex flex-col w-full mx-auto sm:ml-auto sm:mr-0 sm:pl-[10%] md:pl-[15%] lg:pl-[25%]">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+          <motion.h1
+            className="heading text-white text-3xl sm:text-4xl md:text-5xl font-bold"
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            My{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue-100">
+              Skills
+            </span>
+          </motion.h1>
+
+          <div className="bg-black-200/30 backdrop-blur-md p-1 self-start sm:self-auto rounded">
+            <button
+              onClick={() => setActiveTab("technical")}
+              className={`px-3 sm:px-4 md:px-6 py-2 text-xs sm:text-sm font-medium transition-all duration-300 rounded-sm
                       ${
                         activeTab === "technical"
-                          ? "bg-gradient-to-r from-purple/90 to-blue-100/70 text-white shadow-lg"
-                          : "text-white-100 hover:text-white"
+                          ? "bg-purple/90 text-white"
+                          : "text-white hover:text-purple"
                       }`}
-          >
-            Technical Skills
-          </button>
-          <button
-            onClick={() => setActiveTab("soft")}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 
+            >
+              Technical Skills
+            </button>
+            <button
+              onClick={() => setActiveTab("soft")}
+              className={`px-3 sm:px-4 md:px-6 py-2 text-xs sm:text-sm font-medium transition-all duration-300 rounded-sm
                       ${
                         activeTab === "soft"
-                          ? "bg-gradient-to-r from-purple/90 to-blue-100/70 text-white shadow-lg"
-                          : "text-white-100 hover:text-white"
+                          ? "bg-purple/90 text-white"
+                          : "text-white hover:text-purple"
                       }`}
-          >
-            Soft Skills
-          </button>
+            >
+              Soft Skills
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="w-full">
-        {activeTab === "technical" ? (
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            {technicalSkills.map((skill) => (
-              <SkillCard
-                key={skill.id}
-                category={skill.category}
-                skills={skill.skills}
-                icon={skill.icon}
-              />
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            {softSkills.map((skill) => (
-              <SkillCard
-                key={skill.id}
-                category={skill.category}
-                skills={skill.skills}
-                icon={skill.icon}
-              />
-            ))}
-          </motion.div>
-        )}
+        <div className="w-full">
+          {activeTab === "technical" ? (
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {technicalSkills.map((skill, index) => (
+                <SkillCard
+                  key={skill.id}
+                  category={skill.category}
+                  skills={skill.skills}
+                  icon={skill.icon}
+                  variants={itemVariants}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {softSkills.map((skill, index) => (
+                <SkillCard
+                  key={skill.id}
+                  category={skill.category}
+                  skills={skill.skills}
+                  icon={skill.icon}
+                  variants={itemVariants}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -89,21 +125,32 @@ const SkillCard = ({
   category,
   skills,
   icon,
+  variants,
+  index,
 }: {
   category: string;
   skills: string;
   icon: string;
+  variants: any;
+  index: number;
 }) => {
+  // Chuyển đổi chuỗi kỹ năng thành mảng và chia nhỏ
+  const skillList = skills
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  // Hiển thị card ngay cả khi không có kỹ năng (bỏ phần filter)
   return (
     <motion.div
-      whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(203, 172, 249, 0.1)" }}
-      className="relative overflow-hidden rounded-xl bg-gradient-to-br from-black-200/70 to-black-100/90 backdrop-blur-md border border-white/10 p-5 h-full"
+      variants={variants}
+      custom={index}
+      whileHover={{ y: -5, scale: 1.02 }}
+      className="relative overflow-hidden bg-black-200/20 backdrop-blur-md p-4 sm:p-5 h-full rounded-lg"
     >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-purple/5 rounded-full filter blur-3xl -mr-10 -mt-10 z-0"></div>
-
       <div className="relative z-10">
         <div className="flex items-center mb-4">
-          <div className="w-10 h-10 mr-3 bg-black-300/40 rounded-lg p-2 flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 mr-3 bg-black-300/30 p-1.5 sm:p-2 flex items-center justify-center rounded-md">
             <Image
               src={icon}
               alt={category}
@@ -112,18 +159,24 @@ const SkillCard = ({
               className="object-contain"
             />
           </div>
-          <h3 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple">
+          <h3 className="text-base sm:text-lg font-bold text-white">
             {category}
           </h3>
         </div>
 
-        <div className="text-white-100 text-sm space-y-2">
-          {skills.split(",").map((skill, index) => (
-            <div key={index} className="flex items-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple/70 mr-2"></div>
-              <span>{skill.trim()}</span>
+        <div className="text-white text-xs sm:text-sm space-y-1.5 sm:space-y-2">
+          {skillList.length > 0 ? (
+            <div className="grid grid-cols-1 gap-1.5 sm:gap-2">
+              {skillList.map((skill, index) => (
+                <div key={index} className="flex items-center">
+                  <div className="w-1.5 h-1.5 bg-purple/70 mr-2 rounded-full"></div>
+                  <span>{skill}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="text-white/60 italic text-xs">No skills listed</div>
+          )}
         </div>
       </div>
     </motion.div>
