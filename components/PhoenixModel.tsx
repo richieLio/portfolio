@@ -16,43 +16,43 @@ const sectionPositions = [
     id: "banner",
     position: { x: 4, y: -1.5, z: 0 },
     rotation: { x: 0.1, y: -0.8, z: 0.05 },
-    entranceRotation: { x: Math.PI * 2, y: 0, z: 0 }, // Lộn ngược 360 độ theo trục x
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "intro",
     position: { x: -6, y: -2, z: -2 },
-    rotation: { x: 0.2, y: 0.8, z: -0.05 },
-    entranceRotation: { x: 0, y: 0, z: Math.PI * 2 }, // Lộn vòng 360 độ theo trục z
+    rotation: { x: 0.2, y: -1.9, z: -0.05 },
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "description",
     position: { x: 7, y: -2.5, z: -3 },
     rotation: { x: -0.1, y: -0.8, z: 0.1 },
-    entranceRotation: { x: -Math.PI, y: 0, z: Math.PI }, // Lộn ngược nửa vòng theo trục x và z
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "skills",
     position: { x: -4, y: -1, z: 0 },
-    rotation: { x: 0.3, y: 0.8, z: 0.1 },
-    entranceRotation: { x: Math.PI, y: Math.PI, z: 0 }, // Lộn ngược và xoay 180 độ
+    rotation: { x: -0.5, y: -2.5, z: -0.3 },
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "publications",
     position: { x: 6, y: -2, z: -2 }, // Cột phải
-    rotation: { x: 0.1, y: -0.8, z: 0.05 },
+    rotation: { x: -0.5, y: -0.8, z: 0.05 },
     entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "certifications",
     position: { x: -5.5, y: -1.5, z: -1 }, // Cột trái
-    rotation: { x: 0.2, y: 0.8, z: 0 },
-    entranceRotation: { x: Math.PI, y: 0, z: -Math.PI }, // Lộn ngược và xoay ngược
+    rotation: { x: 0.5, y: -4, z: 0 },
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
   {
     id: "approach",
     position: { x: 4, y: -2, z: -1 }, // Cột phải
     rotation: { x: 0, y: -0.9, z: 0.1 },
-    entranceRotation: { x: 0, y: 0, z: Math.PI * 2 }, // Xoay 360 độ theo trục z
+    entranceRotation: { x: 0, y: Math.PI * 2, z: 0 }, // Xoay 360 độ theo trục y
   },
 ];
 
