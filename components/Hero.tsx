@@ -13,8 +13,8 @@ const Hero = () => {
       style={{ height: "90vh" }}
     >
       {/* Animated Gradient Accent - White Themed */}
-      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-white/10 to-transparent z-10"></div>
-      <div className="absolute top-0 left-0 w-[40%] h-[200px] bg-gradient-to-br from-white/10 to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[100px]"></div>
+      <div className="absolute top-0 left-0 w-[40%] h-[200px]"></div>
 
       {/* Hero Content - Left Aligned */}
       <div className="relative z-20 flex h-full w-full px-6 md:px-12">

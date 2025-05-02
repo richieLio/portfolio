@@ -18,7 +18,7 @@ const PhoenixScroller = dynamic(() => import("@/components/PhoenixScroller"), {
 
 export default function Home() {
   return (
-    <main className="relative bg-black-100 overflow-x-hidden">
+    <main className="relative bg-sky-900 overflow-x-hidden">
       {/* Navigation - Higher z-index to stay above content */}
       <FloatingNav navItems={navItems} />
 
