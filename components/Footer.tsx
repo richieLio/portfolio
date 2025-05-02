@@ -31,6 +31,8 @@ const Footer = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+
     setStatus({
       submitting: true,
       submitted: false,
@@ -152,7 +154,7 @@ const Footer = () => {
               <p className="text-white-100/70 mb-4">
                 I&apos;ll receive your message instantly via Telegram!
               </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 {status.submitted && (
                   <div
                     className={`p-3 rounded-lg ${

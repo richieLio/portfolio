@@ -7,7 +7,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { FiSun, FiMoon, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import { useTheme } from "next-themes";
 
 export const FloatingNav = ({
@@ -130,19 +130,6 @@ export const FloatingNav = ({
             {/* Mobile Menu & Theme Toggle */}
             <div className="flex items-center space-x-2">
               {/* Theme Toggle */}
-              {mounted && (
-                <button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="p-2 rounded-full bg-black-200/50 hover:bg-black-200/70 transition-colors border border-white/10"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? (
-                    <FiSun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
-                  ) : (
-                    <FiMoon className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
-                  )}
-                </button>
-              )}
 
               {/* Mobile Navigation Toggle */}
               <div className="md:hidden">

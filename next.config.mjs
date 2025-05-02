@@ -1,12 +1,11 @@
 import {withSentryConfig} from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "export",
     typescript: {
         ignoreBuildErrors: true, 
     },
     images: {
-        unoptimized: true,
+        domains: ['localhost', 'hoanglh.id.vn', 's3.amazonaws.com'],
     }
 };
 

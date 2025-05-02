@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
 
 // Telegram Bot configuration
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID_HERE';
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '7886310755:AAFnjK1AOw0xnvydqnydgCzWKibScP9dYbU';
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '1601898211';
 
 // Initialize the bot (using polling: false since we're just sending messages)
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: false });
